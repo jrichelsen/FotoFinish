@@ -1,14 +1,86 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="200" prefWidth="320" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fotofinish.FXMLDocumentController">
-    <children>
-        <Button layoutX="126" layoutY="90" text="Click Me!" onAction="#handleButtonAction" fx:id="button" />
-        <Label layoutX="126" layoutY="120" minHeight="16" minWidth="69" fx:id="label" />
-    </children>
-</AnchorPane>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fotofinish.FXMLDocumentController">
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem fx:id="menubarHelpFotoFinishHelpMenuItem" mnemonicParsing="false" onAction="#displayHelpDialog" text="Foto Finish Help" />
+                  <MenuItem fx:id="menubarHelpAboutMenuItem" mnemonicParsing="false" onAction="#displayAboutDialog" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+   <center>
+      <SplitPane dividerPositions="0.14941569282136896" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <VBox layoutX="-11.0" layoutY="25.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Label fx:id="filtersLabel" text="Filters" />
+                        <Button fx:id="filterGrayscaleButton" mnemonicParsing="false" onAction="#applyFilterGrayscale" text="Grayscale" />
+                        <Button fx:id="filterSepiaButton" mnemonicParsing="false" onAction="#applyFilterSepia" text="Sepia" />
+                        <Button fx:id="filterInstantButton" mnemonicParsing="false" onAction="#applyFilterInstant" text="Instant" />
+                        <Button fx:id="filterCustomButton" mnemonicParsing="false" onAction="#createFilterCustomPopup" text="Custom" />
+                        <Button fx:id="filterNoneButton" mnemonicParsing="false" onAction="#applyFilterNone" text="None" />
+                        <Label fx:id="sliderLabel" text="Sliders" />
+                        <GridPane prefHeight="310.0" prefWidth="175.0">
+                          <columnConstraints>
+                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints maxHeight="88.0" minHeight="10.0" prefHeight="23.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="290.0" minHeight="50.0" prefHeight="287.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Label fx:id="brightnessLabel" text="Brightness" />
+                              <Label fx:id="contrastLabel" text="Contrast" GridPane.columnIndex="1" />
+                              <Slider fx:id="brightnessSlider" min="-100.0" minorTickCount="5" orientation="VERTICAL" showTickLabels="true" showTickMarks="true" snapToTicks="true" GridPane.rowIndex="1" />
+                              <Slider fx:id="contrastSlider" min="-100.0" minorTickCount="5" orientation="VERTICAL" showTickLabels="true" showTickMarks="true" snapToTicks="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                           </children>
+                        </GridPane>
+                        <Label fx:id="drawingLabel" text="Drawing" />
+                        <ColorPicker fx:id="brushColorPicker" onAction="#changeBrushColor" />
+                        <Label fx:id="brushTypeLabel" text="Brush Type" />
+                        <RadioButton fx:id="brushTypeCircleRadioButton" mnemonicParsing="false" onAction="#changeBrushTypeCircle" selected="true" text="Circle">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="brushTypeRadioGroup" />
+                           </toggleGroup>
+                        </RadioButton>
+                        <RadioButton fx:id="brushTypeSquareRadioButton" mnemonicParsing="false" onAction="#changeBrushTypeSquare" text="Square" toggleGroup="$brushTypeRadioGroup" />
+                        <RadioButton fx:id="brushTypeSpraypaintRadioButton" mnemonicParsing="false" onAction="#changeBrushTypeSpraypaint" text="Spraypaint" toggleGroup="$brushTypeRadioGroup" />
+                        <Label fx:id="brushSizeLabel" text="Brush Size" />
+                        <TextField fx:id="brushSizeTextField" onAction="#adjustBrushSize" />
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="369.0" prefWidth="465.0">
+               <children>
+                  <ScrollPane layoutX="145.0" layoutY="111.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <content>
+                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+                     </content>
+                  </ScrollPane>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </center>
+</BorderPane>
