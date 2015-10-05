@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.input.*?>
 <?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
@@ -13,12 +14,49 @@
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
+                  <MenuItem fx:id="menubarFileNew" mnemonicParsing="false" onAction="#createNewFile" text="New">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem fx:id="menubarFileOpen" mnemonicParsing="false" onAction="#openFile" text="Open">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
+                  <Menu mnemonicParsing="false" text="Open from Gallery">
+                    <items>
+                      <MenuItem fx:id="menubarFileGalleryButterfly" mnemonicParsing="false" onAction="#openFileGalleryButterfly" text="Butterfly" />
+                        <MenuItem fx:id="menubarFileGalleryTeddyBear" mnemonicParsing="false" onAction="#openFileGalleryTeddyBear" text="Teddy Bear" />
+                        <MenuItem fx:id="menubarFileGalleryPrincess" mnemonicParsing="false" onAction="#openFileGalleryPrincess" text="Princess" />
+                        <MenuItem fx:id="menubarFileGalleryFirefighter" mnemonicParsing="false" onAction="#openFileGalleryFirefighter" text="Firefighter" />
+                    </items>
+                  </Menu>
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem fx:id="menubarFileSave" mnemonicParsing="false" onAction="#saveFile" text="Save">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
+                  <MenuItem fx:id="menubarFileSaveAs" mnemonicParsing="false" onAction="#saveFileAs" text="Save As">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
+                  <SeparatorMenuItem mnemonicParsing="false" />
+              <MenuItem fx:id="menubarFileQuit" mnemonicParsing="false" onAction="#quit" text="Quit">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="C" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
-              <MenuItem fx:id="menubarHelpFotoFinishHelpMenuItem" mnemonicParsing="false" onAction="#displayHelpDialog" text="Foto Finish Help" />
+              <MenuItem fx:id="menubarHelpFotoFinishHelpMenuItem" mnemonicParsing="false" onAction="#displayHelpDoc" text="Foto Finish Help">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="F1" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
                   <MenuItem fx:id="menubarHelpAboutMenuItem" mnemonicParsing="false" onAction="#displayAboutDialog" text="About" />
             </items>
           </Menu>
