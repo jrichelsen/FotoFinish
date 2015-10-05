@@ -5,6 +5,7 @@
  */
 package fotofinish;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
@@ -21,6 +22,8 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 
 /**
  *
@@ -173,6 +176,10 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void openFile(ActionEvent event) {
         System.out.println("TODO: launched file picker");
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Image");
+        fileChooser.getExtensionFilters().add(new ExtensionFilter("Image Files", "*.png", "*.jpg", "*.tiff", "*.bmp"));
+        File selectedFile = fileChooser.showOpenDialog(null);
     }
 
     @FXML
