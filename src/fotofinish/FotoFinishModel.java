@@ -23,11 +23,16 @@ public class FotoFinishModel {
     private BrushType brushType;
     private int brushSize;
     private Color brushColor;
+    private int currBrightness;
+    private int currContrast;
+    private final int SLIDER_CHANGE_THRESH = 1;
 
     //TODO: how can we better synchronize this with FXML?
     public FotoFinishModel() {
         this.brushType = BrushType.CIRCLE;
         this.brushSize = 10;
+        currBrightness = 50;
+        currContrast = 50;
     }
 
     public void loadImage(File file) {
@@ -80,5 +85,19 @@ public class FotoFinishModel {
     public void applyCustomFilter() {
         //TODO: code to apply custom filter (INCLUDING ARGS FROM POPUP) to image
         return;
+    }
+
+    public boolean changeBrightness(int brightness) {
+        if (Math.abs(this.currBrightness - brightness) > this.SLIDER_CHANGE_THRESH) {
+           //TODO: code to adjust brightness 
+        }
+        return false;
+    }
+
+    public boolean changeContrast(int contrast) {
+        if (Math.abs(this.currContrast - contrast) > this.SLIDER_CHANGE_THRESH) {
+            //TODO: code to adjust contrast
+        }
+        return false;
     }
 }

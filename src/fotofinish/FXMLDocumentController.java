@@ -93,10 +93,16 @@ public class FXMLDocumentController implements Initializable {
         //TODO: make call function only when value changes by certain threshold
         this.brightnessSlider.valueProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
             System.out.println("TODO: brightness changed to " + newValue);
+            if(model.changeBrightness((int) newValue)) {
+                this.refreshImageViewer();
+            }
         });
 
         this.contrastSlider.valueProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
             System.out.println("TODO: contrast changed to " + newValue);
+            if(model.changeContrast((int) newValue)) {
+                this.refreshImageViewer();
+            }
         });
     }
 
