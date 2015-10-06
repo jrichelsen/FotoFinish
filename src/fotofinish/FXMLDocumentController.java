@@ -1,17 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fotofinish;
 
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -20,18 +13,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Slider;
-import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 
-/**
- *
- * @author user
- */
 public class FXMLDocumentController implements Initializable {
-    
-    private Label label;
+
+    private FotoFinishModel model;
     @FXML
     private Button filterGrayscaleButton;
     @FXML
@@ -75,7 +64,7 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private Label brushSizeLabel;
     @FXML
-    private TextField brushSizeTextField;
+    private NumberFieldFX brushSizeTextField;
     @FXML
     private MenuItem menubarFileNew;
     @FXML
@@ -94,125 +83,123 @@ public class FXMLDocumentController implements Initializable {
     private MenuItem menubarFileSaveAs;
     @FXML
     private MenuItem menubarFileQuit;
+    @FXML
+    private ImageView imageViewer;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        this.model = new FotoFinishModel();
+
         //TODO: make call function only when value changes by certain threshold
-        brightnessSlider.valueProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                System.out.println("TODO: brightness changed to " + newValue);
-            }
+        this.brightnessSlider.valueProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
+            System.out.println("TODO: brightness changed to " + newValue);
         });
 
-        contrastSlider.valueProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                System.out.println("TODO: contrast changed to " + newValue);
-            }
+        this.contrastSlider.valueProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
+            System.out.println("TODO: contrast changed to " + newValue);
         });
     }
 
     @FXML
-    private void applyFilterGrayscale(ActionEvent event) {
+    private void filterGrayscale(ActionEvent event) {
         System.out.println("TODO: grayscale filter applied");
     }
 
     @FXML
-    private void applyFilterSepia(ActionEvent event) {
+    private void filterSepia(ActionEvent event) {
         System.out.println("TODO: sepia filter applied");
     }
 
     @FXML
-    private void applyFilterInstant(ActionEvent event) {
+    private void filterInstant(ActionEvent event) {
         System.out.println("TODO: instant filter applied");
     }
 
     @FXML
-    private void createFilterCustomPopup(ActionEvent event) {
+    private void filterCustom(ActionEvent event) {
         System.out.println("TODO: launched custom filter popup");
     }
 
     @FXML
-    private void applyFilterNone(ActionEvent event) {
+    private void filterNone(ActionEvent event) {
         System.out.println("TODO: none filter applied");
     }
 
     @FXML
-    private void changeBrushTypeCircle(ActionEvent event) {
+    private void brushTypeCircle(ActionEvent event) {
         System.out.println("TODO: brush type changed to circle");
     }
 
     @FXML
-    private void changeBrushTypeSquare(ActionEvent event) {
+    private void brushTypeSquare(ActionEvent event) {
         System.out.println("TODO: brush type changed to square");
     }
 
     @FXML
-    private void changeBrushTypeSpraypaint(ActionEvent event) {
+    private void brushTypeSpraypaint(ActionEvent event) {
         System.out.println("TODO: brush type changed to spraypaint");
     }
 
     @FXML
-    private void displayHelpDoc(ActionEvent event) {
+    private void helpDoc(ActionEvent event) {
         System.out.println("TODO: launched help document");
     }
 
     @FXML
-    private void displayAboutDialog(ActionEvent event) {
+    private void aboutDialog(ActionEvent event) {
         System.out.println("TODO: created about dialog");
     }
 
     @FXML
-    private void changeBrushColor(ActionEvent event) {
+    private void brushColor(ActionEvent event) {
         System.out.println("TODO: brush color changed to <BRUSH COLOR>");
     }
 
     @FXML
-    private void adjustBrushSize(ActionEvent event) {
+    private void brushSize(ActionEvent event) {
         System.out.println("TODO: brush size changed to <BRUSH SIZE>");
     }
 
     @FXML
-    private void openFile(ActionEvent event) {
+    private void open(ActionEvent event) {
         System.out.println("TODO: launched file picker");
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Image");
         fileChooser.getExtensionFilters().add(new ExtensionFilter("Image Files", "*.png", "*.jpg", "*.tiff", "*.bmp"));
-        File selectedFile = fileChooser.showOpenDialog(null);
+        File selectedFile = fileChooser.showOpenDialog(null); //TODO: needs value in order to block main window
+        this.model.loadImage(selectedFile);
+        this.imageViewer.setImage(this.model.getImage());
     }
 
     @FXML
-    private void openFileGalleryButterfly(ActionEvent event) {
+    private void galleryButterfly(ActionEvent event) {
         System.out.println("TODO: opened butterfly file from gallery");
     }
 
     @FXML
-    private void openFileGalleryTeddyBear(ActionEvent event) {
+    private void galleryTeddyBear(ActionEvent event) {
         System.out.println("TODO: opened teddy bear file from gallery");
     }
 
     @FXML
-    private void openFileGalleryPrincess(ActionEvent event) {
+    private void galleryPrincess(ActionEvent event) {
         System.out.println("TODO: opened princess file from gallery");
     }
 
     @FXML
-    private void openFileGalleryFirefighter(ActionEvent event) {
+    private void galleryFirefighter(ActionEvent event) {
         System.out.println("TODO: opened firefighter file from gallery");
     }
 
     @FXML
-    private void saveFile(ActionEvent event) {
+    private void save(ActionEvent event) {
         System.out.println("TODO: saved file");
     }
 
-
     @FXML
-    private void saveFileAs(ActionEvent event) {
+    private void saveAs(ActionEvent event) {
         System.out.println("TODO: launched file save as dialog");
     }
-
 
     @FXML
     private void quit(ActionEvent event) {
@@ -220,7 +207,7 @@ public class FXMLDocumentController implements Initializable {
     }
 
     @FXML
-    private void createNewFile(ActionEvent event) {
+    private void newFile(ActionEvent event) {
         System.out.println("TODO: created new file");
     }
 }

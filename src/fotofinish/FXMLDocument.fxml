@@ -14,32 +14,32 @@
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-                  <MenuItem fx:id="menubarFileNew" mnemonicParsing="false" onAction="#createNewFile" text="New">
+                  <MenuItem fx:id="menubarFileNew" mnemonicParsing="false" onAction="#newFile" text="New">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator>
                   </MenuItem>
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem fx:id="menubarFileOpen" mnemonicParsing="false" onAction="#openFile" text="Open">
+                  <MenuItem fx:id="menubarFileOpen" mnemonicParsing="false" onAction="#open" text="Open">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator>
                   </MenuItem>
                   <Menu mnemonicParsing="false" text="Open from Gallery">
                     <items>
-                      <MenuItem fx:id="menubarFileGalleryButterfly" mnemonicParsing="false" onAction="#openFileGalleryButterfly" text="Butterfly" />
-                        <MenuItem fx:id="menubarFileGalleryTeddyBear" mnemonicParsing="false" onAction="#openFileGalleryTeddyBear" text="Teddy Bear" />
-                        <MenuItem fx:id="menubarFileGalleryPrincess" mnemonicParsing="false" onAction="#openFileGalleryPrincess" text="Princess" />
-                        <MenuItem fx:id="menubarFileGalleryFirefighter" mnemonicParsing="false" onAction="#openFileGalleryFirefighter" text="Firefighter" />
+                      <MenuItem fx:id="menubarFileGalleryButterfly" mnemonicParsing="false" onAction="#galleryButterfly" text="Butterfly" />
+                        <MenuItem fx:id="menubarFileGalleryTeddyBear" mnemonicParsing="false" onAction="#galleryTeddyBear" text="Teddy Bear" />
+                        <MenuItem fx:id="menubarFileGalleryPrincess" mnemonicParsing="false" onAction="#galleryPrincess" text="Princess" />
+                        <MenuItem fx:id="menubarFileGalleryFirefighter" mnemonicParsing="false" onAction="#galleryFirefighter" text="Firefighter" />
                     </items>
                   </Menu>
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem fx:id="menubarFileSave" mnemonicParsing="false" onAction="#saveFile" text="Save">
+                  <MenuItem fx:id="menubarFileSave" mnemonicParsing="false" onAction="#save" text="Save">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator>
                   </MenuItem>
-                  <MenuItem fx:id="menubarFileSaveAs" mnemonicParsing="false" onAction="#saveFileAs" text="Save As">
+                  <MenuItem fx:id="menubarFileSaveAs" mnemonicParsing="false" onAction="#saveAs" text="Save As">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
                      </accelerator>
@@ -53,11 +53,11 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
-              <MenuItem fx:id="menubarHelpFotoFinishHelpMenuItem" mnemonicParsing="false" onAction="#displayHelpDoc" text="Foto Finish Help">
+              <MenuItem fx:id="menubarHelpFotoFinishHelpMenuItem" mnemonicParsing="false" onAction="#helpDoc" text="Foto Finish Help">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="F1" control="UP" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator></MenuItem>
-                  <MenuItem fx:id="menubarHelpAboutMenuItem" mnemonicParsing="false" onAction="#displayAboutDialog" text="About" />
+                  <MenuItem fx:id="menubarHelpAboutMenuItem" mnemonicParsing="false" onAction="#aboutDialog" text="About" />
             </items>
           </Menu>
         </menus>
@@ -71,11 +71,11 @@
                   <VBox layoutX="-11.0" layoutY="25.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <Label fx:id="filtersLabel" text="Filters" />
-                        <Button fx:id="filterGrayscaleButton" mnemonicParsing="false" onAction="#applyFilterGrayscale" text="Grayscale" />
-                        <Button fx:id="filterSepiaButton" mnemonicParsing="false" onAction="#applyFilterSepia" text="Sepia" />
-                        <Button fx:id="filterInstantButton" mnemonicParsing="false" onAction="#applyFilterInstant" text="Instant" />
-                        <Button fx:id="filterCustomButton" mnemonicParsing="false" onAction="#createFilterCustomPopup" text="Custom" />
-                        <Button fx:id="filterNoneButton" mnemonicParsing="false" onAction="#applyFilterNone" text="None" />
+                        <Button fx:id="filterGrayscaleButton" mnemonicParsing="false" onAction="#filterGrayscale" text="Grayscale" />
+                        <Button fx:id="filterSepiaButton" mnemonicParsing="false" onAction="#filterSepia" text="Sepia" />
+                        <Button fx:id="filterInstantButton" mnemonicParsing="false" onAction="#filterInstant" text="Instant" />
+                        <Button fx:id="filterCustomButton" mnemonicParsing="false" onAction="#filterCustom" text="Custom" />
+                        <Button fx:id="filterNoneButton" mnemonicParsing="false" onAction="#filterNone" text="None" />
                         <Label fx:id="sliderLabel" text="Sliders" />
                         <GridPane prefHeight="310.0" prefWidth="175.0">
                           <columnConstraints>
@@ -94,17 +94,17 @@
                            </children>
                         </GridPane>
                         <Label fx:id="drawingLabel" text="Drawing" />
-                        <ColorPicker fx:id="brushColorPicker" onAction="#changeBrushColor" />
+                        <ColorPicker fx:id="brushColorPicker" onAction="#brushColor" />
                         <Label fx:id="brushTypeLabel" text="Brush Type" />
-                        <RadioButton fx:id="brushTypeCircleRadioButton" mnemonicParsing="false" onAction="#changeBrushTypeCircle" selected="true" text="Circle">
+                        <RadioButton fx:id="brushTypeCircleRadioButton" mnemonicParsing="false" onAction="#brushTypeCircle" selected="true" text="Circle">
                            <toggleGroup>
                               <ToggleGroup fx:id="brushTypeRadioGroup" />
                            </toggleGroup>
                         </RadioButton>
-                        <RadioButton fx:id="brushTypeSquareRadioButton" mnemonicParsing="false" onAction="#changeBrushTypeSquare" text="Square" toggleGroup="$brushTypeRadioGroup" />
-                        <RadioButton fx:id="brushTypeSpraypaintRadioButton" mnemonicParsing="false" onAction="#changeBrushTypeSpraypaint" text="Spraypaint" toggleGroup="$brushTypeRadioGroup" />
+                        <RadioButton fx:id="brushTypeSquareRadioButton" mnemonicParsing="false" onAction="#brushTypeSquare" text="Square" toggleGroup="$brushTypeRadioGroup" />
+                        <RadioButton fx:id="brushTypeSpraypaintRadioButton" mnemonicParsing="false" onAction="#brushTypeSpraypaint" text="Spraypaint" toggleGroup="$brushTypeRadioGroup" />
                         <Label fx:id="brushSizeLabel" text="Brush Size" />
-                        <TextField fx:id="brushSizeTextField" onAction="#adjustBrushSize" />
+                        <fotofinish.NumberFieldFX fx:id="brushSizeTextField" onAction="#brushSize" text="10" />
                      </children>
                   </VBox>
                </children>
@@ -113,7 +113,7 @@
                <children>
                   <ScrollPane layoutX="145.0" layoutY="111.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <content>
-                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="imageViewer" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
                      </content>
                   </ScrollPane>
                </children>
