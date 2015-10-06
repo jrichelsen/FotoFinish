@@ -103,26 +103,37 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void filterGrayscale(ActionEvent event) {
         System.out.println("TODO: grayscale filter applied");
+        model.applyGrayscaleFilter();
+        this.refreshImageViewer();
     }
 
     @FXML
     private void filterSepia(ActionEvent event) {
         System.out.println("TODO: sepia filter applied");
+        model.applySepiaFilter();
+        this.refreshImageViewer();
     }
 
     @FXML
     private void filterInstant(ActionEvent event) {
         System.out.println("TODO: instant filter applied");
+        model.applyInstantFilter();
+        this.refreshImageViewer();
     }
 
     @FXML
     private void filterCustom(ActionEvent event) {
         System.out.println("TODO: launched custom filter popup");
+        //TODO: code to create custom filter popup and get arguments for custom filter
+        model.applyCustomFilter();
+        this.refreshImageViewer();
     }
 
     @FXML
     private void filterNone(ActionEvent event) {
         System.out.println("TODO: none filter applied");
+        model.reloadImage();
+        this.refreshImageViewer();
     }
 
     @FXML
@@ -165,10 +176,10 @@ public class FXMLDocumentController implements Initializable {
         System.out.println("TODO: launched file picker");
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Image");
-        fileChooser.getExtensionFilters().add(new ExtensionFilter("Image Files", "*.png", "*.jpg", "*.tiff", "*.bmp"));
+        fileChooser.getExtensionFilters().add(new ExtensionFilter("Image Files", "*.jpg"));
         File selectedFile = fileChooser.showOpenDialog(null); //TODO: needs value in order to block main window
-        this.model.loadImage(selectedFile);
-        this.imageViewer.setImage(this.model.getImage());
+        model.loadImage(selectedFile);
+        this.refreshImageViewer();
     }
 
     @FXML
@@ -194,11 +205,17 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void save(ActionEvent event) {
         System.out.println("TODO: saved file");
+        model.saveImage();
     }
 
     @FXML
     private void saveAs(ActionEvent event) {
         System.out.println("TODO: launched file save as dialog");
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save Image");
+        fileChooser.getExtensionFilters().add(new ExtensionFilter("Image Files", "*.jpg"));
+        File selectedFile = fileChooser.showSaveDialog(null); //TODO: needs value in order to block main window
+        model.saveImageAs(selectedFile);
     }
 
     @FXML
@@ -209,5 +226,9 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void newFile(ActionEvent event) {
         System.out.println("TODO: created new file");
+    }
+
+    private void refreshImageViewer() {
+        this.imageViewer.setImage(model.getImage());
     }
 }

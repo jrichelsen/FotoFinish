@@ -3,10 +3,13 @@ package fotofinish;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javax.imageio.ImageIO;
 
 public class FotoFinishModel {
     private enum BrushType {
@@ -42,7 +45,40 @@ public class FotoFinishModel {
         return;
     }
 
+    public void saveImage() {
+        this.saveImageAs(this.imageFile);
+    }
+
+    //TODO: save as appropriate file type (not just jpg)
+    public void saveImageAs(File file) {
+        try {
+            ImageIO.write(SwingFXUtils.fromFXImage(image, null), "jpg", file);
+        } catch (IOException ioex) {
+            Logger.getLogger(FotoFinishModel.class.getName()).log(Level.SEVERE, null, ioex);
+        }
+    }
+
     public Image getImage() {
         return this.image;
+    }
+
+    public void applyGrayscaleFilter() {
+        //TODO: code to apply grayscale filter to image
+        return;
+    }
+
+    public void applySepiaFilter() {
+        //TODO: code to apply sepia filter to image
+        return;
+    }
+
+    public void applyInstantFilter() {
+        //TODO: code to apply instant filter to image
+        return;
+    }
+
+    public void applyCustomFilter() {
+        //TODO: code to apply custom filter (INCLUDING ARGS FROM POPUP) to image
+        return;
     }
 }
