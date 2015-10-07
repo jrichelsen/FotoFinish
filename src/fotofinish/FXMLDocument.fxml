@@ -70,13 +70,13 @@
                <children>
                   <VBox layoutX="-11.0" layoutY="25.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <Label fx:id="filtersLabel" text="Filters" />
+                        <Label text="Filters" />
                         <Button fx:id="filterGrayscaleButton" mnemonicParsing="false" onAction="#filterGrayscale" text="Grayscale" />
                         <Button fx:id="filterSepiaButton" mnemonicParsing="false" onAction="#filterSepia" text="Sepia" />
                         <Button fx:id="filterInstantButton" mnemonicParsing="false" onAction="#filterInstant" text="Instant" />
                         <Button fx:id="filterCustomButton" mnemonicParsing="false" onAction="#filterCustom" text="Custom" />
                         <Button fx:id="filterNoneButton" mnemonicParsing="false" onAction="#filterNone" text="None" />
-                        <Label fx:id="sliderLabel" text="Sliders" />
+                        <Label text="Sliders" />
                         <GridPane prefHeight="310.0" prefWidth="175.0">
                           <columnConstraints>
                             <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -87,15 +87,15 @@
                             <RowConstraints maxHeight="290.0" minHeight="50.0" prefHeight="287.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Label fx:id="brightnessLabel" text="Brightness" />
-                              <Label fx:id="contrastLabel" text="Contrast" GridPane.columnIndex="1" />
+                              <Label text="Brightness" />
+                              <Label text="Contrast" GridPane.columnIndex="1" />
                               <Slider fx:id="brightnessSlider" min="-100.0" minorTickCount="5" orientation="VERTICAL" showTickLabels="true" showTickMarks="true" snapToTicks="true" GridPane.rowIndex="1" />
                               <Slider fx:id="contrastSlider" min="-100.0" minorTickCount="5" orientation="VERTICAL" showTickLabels="true" showTickMarks="true" snapToTicks="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                            </children>
                         </GridPane>
-                        <Label fx:id="drawingLabel" text="Drawing" />
+                        <Label text="Drawing" />
                         <ColorPicker fx:id="brushColorPicker" onAction="#brushColor" />
-                        <Label fx:id="brushTypeLabel" text="Brush Type" />
+                        <Label text="Brush Type" />
                         <RadioButton fx:id="brushTypeCircleRadioButton" mnemonicParsing="false" onAction="#brushTypeCircle" selected="true" text="Circle">
                            <toggleGroup>
                               <ToggleGroup fx:id="brushTypeRadioGroup" />
@@ -103,8 +103,8 @@
                         </RadioButton>
                         <RadioButton fx:id="brushTypeSquareRadioButton" mnemonicParsing="false" onAction="#brushTypeSquare" text="Square" toggleGroup="$brushTypeRadioGroup" />
                         <RadioButton fx:id="brushTypeSpraypaintRadioButton" mnemonicParsing="false" onAction="#brushTypeSpraypaint" text="Spraypaint" toggleGroup="$brushTypeRadioGroup" />
-                        <Label fx:id="brushSizeLabel" text="Brush Size" />
-                        <fotofinish.NumberFieldFX fx:id="brushSizeTextField" onAction="#brushSize" text="10" />
+                        <Label text="Brush Size" />
+                        <fotofinish.NumberFieldFX fx:id="brushSizeNumberField" onAction="#brushSize" text="10" />
                      </children>
                   </VBox>
                </children>
