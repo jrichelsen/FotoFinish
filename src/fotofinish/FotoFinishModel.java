@@ -101,7 +101,7 @@ public class FotoFinishModel {
 
         processor.setEffect(grayscaleTone);
         this.image = processor.snapshot(null, null); //TODO: what is first parameter?
-        logger.log(Level.INFO, "TODO: applied grayscale filter");
+        logger.log(Level.INFO, "applied grayscale filter");
     }
 
     public void applySepiaFilter() {
