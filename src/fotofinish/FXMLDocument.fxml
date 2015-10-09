@@ -89,8 +89,8 @@
                            <children>
                               <Label text="Brightness" />
                               <Label text="Contrast" GridPane.columnIndex="1" />
-                              <Slider fx:id="brightnessSlider" min="-100.0" minorTickCount="5" orientation="VERTICAL" showTickLabels="true" showTickMarks="true" snapToTicks="true" GridPane.rowIndex="1" />
-                              <Slider fx:id="contrastSlider" min="-100.0" minorTickCount="5" orientation="VERTICAL" showTickLabels="true" showTickMarks="true" snapToTicks="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <Slider fx:id="brightnessSlider" blockIncrement="0.0" majorTickUnit="0.25" max="1.0" min="-1.0" minorTickCount="5" orientation="VERTICAL" showTickLabels="true" showTickMarks="true" snapToTicks="true" GridPane.rowIndex="1" />
+                              <Slider fx:id="contrastSlider" blockIncrement="0.0" majorTickUnit="0.25" max="1.0" min="-1.0" minorTickCount="5" orientation="VERTICAL" showTickLabels="true" showTickMarks="true" snapToTicks="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                            </children>
                         </GridPane>
                         <Label text="Drawing" />
@@ -111,9 +111,9 @@
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="369.0" prefWidth="465.0">
                <children>
-                  <ScrollPane layoutX="145.0" layoutY="111.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <ScrollPane fx:id="imageScrollPane" layoutX="145.0" layoutY="111.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <content>
-                        <ImageView fx:id="imageViewer" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="imageViewer" fitHeight="577.0" fitWidth="1010.0" pickOnBounds="true" preserveRatio="true" />
                      </content>
                   </ScrollPane>
                </children>
