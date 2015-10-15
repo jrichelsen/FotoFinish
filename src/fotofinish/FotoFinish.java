@@ -14,7 +14,12 @@ public class FotoFinish extends Application {
         Parent root = loader.load();
         FXMLDocumentController controller = loader.getController();
         controller.setStage(stage);
-
+        stage.setMinHeight(800);
+        stage.setMinWidth(600);
+        stage.setWidth(1000);
+        stage.setHeight(600);
+        stage.setY(0);
+        stage.setX(0);
         Scene scene = new Scene(root);
 
         stage.setScene(scene);
