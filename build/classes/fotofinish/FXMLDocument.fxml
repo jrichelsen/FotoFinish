@@ -9,7 +9,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="500.0" minWidth="600.0" prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fotofinish.FXMLDocumentController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="500.0" minWidth="600.0" prefHeight="720.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fotofinish.FXMLDocumentController">
    <top>
       <MenuBar prefHeight="0.0" prefWidth="1034.0" BorderPane.alignment="CENTER">
         <menus>
@@ -65,88 +65,99 @@
       </MenuBar>
    </top>
    <center>
-      <SplitPane dividerPositions="0.14941569282136896" minHeight="-Infinity" minWidth="-Infinity" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="TOP_LEFT">
+      <SplitPane dividerPositions="0.14941569282136896" minHeight="-Infinity" minWidth="-Infinity" prefHeight="160.0" prefWidth="200.0" style="-fx-background-color: #E5F7FF;" BorderPane.alignment="TOP_CENTER">
         <items>
-          <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="500.0" minWidth="150.0" prefHeight="658.0" prefWidth="174.0">
+            <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="654.0" prefWidth="172.0">
                <children>
-                  <VBox alignment="TOP_CENTER" layoutY="-1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="660.0" prefWidth="172.0" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="-1.0">
+                  <GridPane alignment="CENTER" prefHeight="183.0" prefWidth="172.0" style="-fx-padding: 10;">
+                    <columnConstraints>
+                      <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="104.0" minWidth="10.0" prefWidth="84.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
                      <children>
-                        <GridPane alignment="CENTER">
+                        <Button fx:id="filterGrayscaleButton" contentDisplay="TOP" mnemonicParsing="false" onAction="#filterGrayscale" prefHeight="25.0" prefWidth="84.0" text="Grayscale" textAlignment="CENTER">
+                           <opaqueInsets>
+                              <Insets top="50.0" />
+                           </opaqueInsets>
+                        </Button>
+                        <Button fx:id="filterSepiaButton" mnemonicParsing="false" onAction="#filterSepia" prefHeight="25.0" prefWidth="83.0" text="Sepia" GridPane.rowIndex="1" />
+                        <Button fx:id="filterInstantButton" mnemonicParsing="false" onAction="#filterInstant" prefHeight="25.0" prefWidth="83.0" text="Instant" GridPane.rowIndex="2" />
+                        <Button fx:id="filterCustomButton" mnemonicParsing="false" onAction="#filterCustom" prefHeight="25.0" prefWidth="82.0" text="Custom" GridPane.rowIndex="3" />
+                        <Button fx:id="filterNoneButton" mnemonicParsing="false" onAction="#filterNone" prefHeight="25.0" prefWidth="82.0" text="None" GridPane.rowIndex="4" />
+                     </children>
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </GridPane>
+                  <GridPane prefHeight="190.0" prefWidth="172.0" style="-fx-padding: 10;">
+                    <columnConstraints>
+                      <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints maxHeight="88.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="290.0" minHeight="26.0" prefHeight="59.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="233.0" minHeight="6.0" prefHeight="40.0" />
+                        <RowConstraints maxHeight="127.0" minHeight="28.0" prefHeight="56.0" />
+                        <RowConstraints maxHeight="148.0" minHeight="23.0" prefHeight="34.0" />
+                        <RowConstraints maxHeight="124.0" minHeight="41.0" prefHeight="51.0" />
+                    </rowConstraints>
+                     <children>
+                        <Label fx:id="brightnessLabel" text="Brightness" />
+                        <Label fx:id="contrastLabel" text="Contrast" GridPane.rowIndex="2" />
+                        <Slider fx:id="brightnessSlider" majorTickUnit="0.5" max="1.0" min="-1.0" minorTickCount="0" orientation="HORIZONTAL" showTickMarks="true" snapToTicks="true" GridPane.rowIndex="1" />
+                        <Slider fx:id="contrastSlider" majorTickUnit="0.5" max="1.0" min="-1.0" minorTickCount="0" orientation="HORIZONTAL" showTickMarks="true" snapToTicks="true" GridPane.rowIndex="3" />
+                        <Label text="Saturation" GridPane.rowIndex="4" />
+                        <Slider majorTickUnit="0.5" max="1.0" min="-1.0" minorTickCount="0" showTickMarks="true" snapToTicks="true" GridPane.rowIndex="5" />
+                     </children>
+                     <padding>
+                        <Insets left="10.0" right="10.0" />
+                     </padding>
+                  </GridPane>
+                  <Label fx:id="drawingLabel" text="Drawing" />
+                  <ColorPicker fx:id="brushColorPicker" onAction="#brushColor" />
+                  <VBox alignment="CENTER" prefHeight="242.0" prefWidth="172.0" style="-fx-padding: 5; -fx-spacing: 5;">
+                     <children>
+                        <GridPane alignment="CENTER" prefHeight="182.0" prefWidth="162.0" style="-fx-padding: 5;">
                           <columnConstraints>
-                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="104.0" minWidth="10.0" prefWidth="84.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
-                           <children>
-                              <Button fx:id="filterGrayscaleButton" contentDisplay="TOP" mnemonicParsing="false" onAction="#filterGrayscale" prefHeight="25.0" prefWidth="84.0" text="Grayscale" textAlignment="CENTER" GridPane.rowIndex="1">
-                                 <opaqueInsets>
-                                    <Insets top="50.0" />
-                                 </opaqueInsets>
-                              </Button>
-                              <Button fx:id="filterSepiaButton" mnemonicParsing="false" onAction="#filterSepia" prefHeight="25.0" prefWidth="83.0" text="Sepia" GridPane.rowIndex="2" />
-                              <Button fx:id="filterInstantButton" mnemonicParsing="false" onAction="#filterInstant" prefHeight="25.0" prefWidth="83.0" text="Instant" GridPane.rowIndex="3" />
-                              <Button fx:id="filterCustomButton" mnemonicParsing="false" onAction="#filterCustom" prefHeight="25.0" prefWidth="82.0" text="Custom" GridPane.rowIndex="4" />
-                              <Button fx:id="filterNoneButton" mnemonicParsing="false" onAction="#filterNone" prefHeight="25.0" prefWidth="82.0" text="None" GridPane.rowIndex="5" />
-                           </children>
-                           <padding>
-                              <Insets left="10.0" />
-                           </padding>
-                        </GridPane>
-                        <GridPane prefHeight="271.0" prefWidth="176.0">
-                          <columnConstraints>
+                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                             <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                           </columnConstraints>
                           <rowConstraints>
-                            <RowConstraints maxHeight="88.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
-                            <RowConstraints maxHeight="290.0" minHeight="26.0" prefHeight="59.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="233.0" minHeight="6.0" prefHeight="40.0" />
-                              <RowConstraints maxHeight="127.0" minHeight="28.0" prefHeight="56.0" />
-                              <RowConstraints maxHeight="148.0" minHeight="23.0" prefHeight="34.0" />
-                              <RowConstraints maxHeight="124.0" minHeight="41.0" prefHeight="51.0" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Label fx:id="brightnessLabel" text="Brightness" />
-                              <Label fx:id="contrastLabel" text="Contrast" GridPane.rowIndex="2" />
-                              <Slider fx:id="brightnessSlider" max="1.0" min="-1.0" minorTickCount="10" orientation="HORIZONTAL" showTickLabels="true" showTickMarks="true" snapToTicks="true" GridPane.rowIndex="1" />
-                              <Slider fx:id="contrastSlider" max="1.0" min="-1.0" minorTickCount="10" orientation="HORIZONTAL" showTickLabels="true" showTickMarks="true" snapToTicks="true" GridPane.rowIndex="3" />
-                              <Label text="Saturation" GridPane.rowIndex="4" />
-                              <Slider max="1.0" min="-1.0" minorTickCount="10" showTickLabels="true" showTickMarks="true" snapToTicks="true" GridPane.rowIndex="5" />
+                              <ToggleButton contentDisplay="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="60.0" style="-fx-pref-width: 50; -fx-pref-height: 50; -fx-background-image: url(&quot;img/circle.png&quot;); -fx-background-size: cover;" textAlignment="CENTER">
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="toolbox" />
+                                 </toggleGroup>
+                              </ToggleButton>
+                              <ToggleButton contentDisplay="CENTER" mnemonicParsing="false" style="-fx-pref-width: 50; -fx-pref-height: 50; -fx-background-image: url(&quot;img/rectangle.png&quot;); -fx-background-size: cover;" textAlignment="CENTER" toggleGroup="$toolbox" GridPane.columnIndex="1" />
+                              <ToggleButton contentDisplay="CENTER" mnemonicParsing="false" style="-fx-pref-width: 50; -fx-pref-height: 50; -fx-background-image: url(&quot;img/brush.png&quot;); -fx-background-size: cover;" textAlignment="CENTER" toggleGroup="$toolbox" GridPane.rowIndex="1" />
+                              <ToggleButton contentDisplay="CENTER" mnemonicParsing="false" style="-fx-pref-width: 50; -fx-pref-height: 50; -fx-background-image: url(&quot;img/spray_can.png&quot;); -fx-background-size: cover;" textAlignment="CENTER" toggleGroup="$toolbox" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                            </children>
-                           <padding>
-                              <Insets left="10.0" right="10.0" />
-                           </padding>
                         </GridPane>
-                        <Label fx:id="drawingLabel" text="Drawing" />
-                        <ColorPicker fx:id="brushColorPicker" onAction="#brushColor" />
-                        <Label fx:id="brushTypeLabel" text="Brush Type" />
-                        <RadioButton fx:id="brushTypeCircleRadioButton" mnemonicParsing="false" onAction="#brushTypeCircle" prefHeight="27.0" prefWidth="219.0" selected="true" text="Circle">
-                           <toggleGroup>
-                              <ToggleGroup fx:id="brushTypeRadioGroup" />
-                           </toggleGroup>
-                        </RadioButton>
-                        <RadioButton fx:id="brushTypeSquareRadioButton" mnemonicParsing="false" onAction="#brushTypeSquare" prefHeight="27.0" prefWidth="175.0" text="Square" toggleGroup="$brushTypeRadioGroup" />
-                        <RadioButton fx:id="brushTypeSpraypaintRadioButton" mnemonicParsing="false" onAction="#brushTypeSpraypaint" prefHeight="27.0" prefWidth="196.0" text="Spraypaint" toggleGroup="$brushTypeRadioGroup" />
-                        <Label fx:id="brushSizeLabel" text="Brush Size" />
-                        <fotofinish.NumberFieldFX fx:id="brushSizeTextField" onAction="#brushSize" text="10" />
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-spacing: 15;">
+                           <children>
+                              <Label fx:id="brushSizeLabel" text="Brush size:" />
+                              <TextField prefHeight="25.0" prefWidth="71.0" style="-fx-pref-width: 50;" />
+                           </children>
+                        </HBox>
                      </children>
                   </VBox>
                </children>
-            </AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="369.0" prefWidth="465.0">
-               <children>
-                  <ScrollPane layoutX="145.0" layoutY="111.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <content>
-                        <ImageView fx:id="imageViewer" fitHeight="657.0" fitWidth="1000.0" pickOnBounds="true" preserveRatio="true" />
-                     </content>
-                  </ScrollPane>
-               </children>
-            </AnchorPane>
+            </VBox>
+            <ScrollPane>
+               <content>
+                  <ImageView fx:id="imageViewer" fitHeight="600.0" fitWidth="960.0" pickOnBounds="true" preserveRatio="true" />
+               </content>
+            </ScrollPane>
         </items>
       </SplitPane>
    </center>
