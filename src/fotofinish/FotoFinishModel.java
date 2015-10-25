@@ -1,5 +1,7 @@
 package fotofinish;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
@@ -8,11 +10,15 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.SepiaTone;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import javax.imageio.ImageIO;
 
 public class FotoFinishModel {
@@ -208,5 +214,20 @@ public class FotoFinishModel {
     public void loadGalleryFirefighterImage() {
         //TODO: load firefighter image (carefully)
         logger.log(Level.INFO, "TODO: loaded firefighter gallery image");
+    }
+     public void OpenAboutDialog() throws IOException {
+        try {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AboutDialog.fxml"));
+                Parent root1 = (Parent) fxmlLoader.load();
+                Stage stage = new Stage();
+                stage.setTitle("About");
+                stage.setWidth(650);
+                stage.setHeight(450);
+                stage.setResizable(false);
+                stage.setScene(new Scene(root1));  
+                stage.show();
+        } catch(Exception e) {
+           e.printStackTrace();
+          }
     }
 }

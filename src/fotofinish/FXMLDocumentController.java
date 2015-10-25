@@ -1,6 +1,7 @@
 package fotofinish;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -47,7 +48,10 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private ImageView imageViewer;
     @FXML
+    private ImageView imageViewerAbout;
+    @FXML
     private ScrollPane imageScrollPane;
+    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -124,8 +128,9 @@ public class FXMLDocumentController implements Initializable {
     }
 
     @FXML
-    private void aboutDialog(ActionEvent ignored) {
+    private void aboutDialog(ActionEvent ignored) throws IOException {
         logger.log(Level.INFO, "TODO: about dialog created");
+        model.OpenAboutDialog();
     }
 
     @FXML
