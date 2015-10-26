@@ -9,10 +9,16 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Toggle;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.SepiaTone;
 import javafx.scene.image.Image;
@@ -24,6 +30,7 @@ import javax.imageio.ImageIO;
 public class FotoFinishModel {
 
     private enum BrushType {
+
         CIRCLE,
         SQUARE,
         SPRAYPAINT
@@ -39,7 +46,9 @@ public class FotoFinishModel {
     private Color brushColor;
     private double brightness;
     private double contrast;
+    private double saturation;
     private final double SLIDER_CHANGE_THRESH = 0.01;
+    
 
     //TODO: how can we better synchronize this with FXML?
     public FotoFinishModel() {
@@ -85,21 +94,21 @@ public class FotoFinishModel {
 
     public void applyGrayscaleFilter() {
         /*
-        BufferedImage tempBufferedImage = SwingFXUtils.fromFXImage(this.image, null);
-        for (int x = 0; x < tempBufferedImage.getWidth(); x++) {
-            for (int y = 0; y < tempBufferedImage.getHeight(); y++) {
-                java.awt.Color c = new java.awt.Color(tempBufferedImage.getRGB(x, y));
-                int r = c.getRed();
-                int g = c.getGreen();
-                int b = c.getBlue();
+         BufferedImage tempBufferedImage = SwingFXUtils.fromFXImage(this.image, null);
+         for (int x = 0; x < tempBufferedImage.getWidth(); x++) {
+         for (int y = 0; y < tempBufferedImage.getHeight(); y++) {
+         java.awt.Color c = new java.awt.Color(tempBufferedImage.getRGB(x, y));
+         int r = c.getRed();
+         int g = c.getGreen();
+         int b = c.getBlue();
 
-                int grayLevel = (r + g + b) / 3;
-                int grayRgb = (grayLevel << 16) + (grayLevel << 8) + grayLevel;
-                tempBufferedImage.setRGB(x, y, grayRgb);
-            }
-        }
-        this.image = SwingFXUtils.toFXImage(tempBufferedImage, null);
-        */
+         int grayLevel = (r + g + b) / 3;
+         int grayRgb = (grayLevel << 16) + (grayLevel << 8) + grayLevel;
+         tempBufferedImage.setRGB(x, y, grayRgb);
+         }
+         }
+         this.image = SwingFXUtils.toFXImage(tempBufferedImage, null);
+         */
         ImageView processor = new ImageView(this.originalImage);
 
         ColorAdjust grayscaleTone = new ColorAdjust();
@@ -118,8 +127,7 @@ public class FotoFinishModel {
     }
 
     public void applyInstantFilter() {
-        //TODO: code to apply instant filter to image
-        logger.log(Level.INFO, "TODO: applied instant filter");
+        logger.log(Level.INFO, "Saturation");
     }
 
     public void applyCustomFilter() {
@@ -130,18 +138,18 @@ public class FotoFinishModel {
     public boolean changeBrightness(double newBrightness) {
         if (Math.abs(this.brightness - newBrightness) >= this.SLIDER_CHANGE_THRESH) {
             /*
-            double brilho = (double) newBrightness;
-            if (brilho <= 0) {
-                brilho = (brilho + 100) / 100; //TODO: what is the point of this?
-            } else {
-                brilho = 1 + (brilho / 100);
-            }
-            RescaleOp op = new RescaleOp(brilho, 0, null); //TODO: how does this work?
-            BufferedImage tempBufferedImage = SwingFXUtils.fromFXImage(this.image, null);
-            op.filter(tempBufferedImage, tempBufferedImage);
-            logger.log(Level.INFO, "TODO: brightness changed from {0} to {1}", new Object[]{newBrightness, this.brightness});
-            this.brightness = newBrightness;
-            */
+             double brilho = (double) newBrightness;
+             if (brilho <= 0) {
+             brilho = (brilho + 100) / 100; //TODO: what is the point of this?
+             } else {
+             brilho = 1 + (brilho / 100);
+             }
+             RescaleOp op = new RescaleOp(brilho, 0, null); //TODO: how does this work?
+             BufferedImage tempBufferedImage = SwingFXUtils.fromFXImage(this.image, null);
+             op.filter(tempBufferedImage, tempBufferedImage);
+             logger.log(Level.INFO, "TODO: brightness changed from {0} to {1}", new Object[]{newBrightness, this.brightness});
+             this.brightness = newBrightness;
+             */
             this.brightness = newBrightness;
             this.updateBrightnessContrast();
             logger.log(Level.INFO, "TODO: brightness changed to {0}", this.brightness);
@@ -160,12 +168,22 @@ public class FotoFinishModel {
         return false;
     }
 
+    public boolean changeSaturation(double newSaturation) {
+        if (Math.abs(this.contrast - newSaturation) >= this.SLIDER_CHANGE_THRESH) {
+            this.saturation = newSaturation;
+            this.updateBrightnessContrast();
+            logger.log(Level.INFO, "TODO: contrast changed to {0}", this.contrast);
+            return true;
+        }
+        return false;
+    }
+
     private void updateBrightnessContrast() {
         ImageView processor = new ImageView(this.originalImage);
-
         ColorAdjust colorAdjust = new ColorAdjust();
         colorAdjust.setBrightness(this.brightness);
         colorAdjust.setContrast(this.contrast);
+        colorAdjust.setSaturation(this.saturation);
 
         processor.setEffect(colorAdjust);
         this.image = processor.snapshot(null, null);
@@ -208,6 +226,7 @@ public class FotoFinishModel {
 
     public void loadGalleryPrincessImage() {
         //TODO: load princess image (carefully)
+
         logger.log(Level.INFO, "TODO: loaded princess gallery image");
     }
 
@@ -215,19 +234,37 @@ public class FotoFinishModel {
         //TODO: load firefighter image (carefully)
         logger.log(Level.INFO, "TODO: loaded firefighter gallery image");
     }
-     public void OpenAboutDialog() throws IOException {
+
+    public void OpenAboutDialog() throws IOException {
         try {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AboutDialog.fxml"));
-                Parent root1 = (Parent) fxmlLoader.load();
-                Stage stage = new Stage();
-                stage.setTitle("About");
-                stage.setWidth(650);
-                stage.setHeight(450);
-                stage.setResizable(false);
-                stage.setScene(new Scene(root1));  
-                stage.show();
-        } catch(Exception e) {
-           e.printStackTrace();
-          }
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AboutDialog.fxml"));
+            Parent root1 = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setTitle("About");
+            stage.setWidth(650);
+            stage.setHeight(450);
+            stage.setResizable(false);
+            stage.setScene(new Scene(root1));
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void OpenHelpDialog() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("HelpDialog.fxml"));
+            Parent root1 = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setTitle("About");
+            stage.setWidth(650);
+            stage.setHeight(450);
+            stage.setResizable(false);
+            stage.setScene(new Scene(root1));
+            stage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -1,5 +1,6 @@
 package fotofinish;
 
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -34,6 +35,8 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private Slider contrastSlider;
     @FXML
+    private Slider saturationSlider;
+    @FXML
     private ToggleGroup brushTypeRadioGroup;
     @FXML
     private RadioButton brushTypeCircleRadioButton;
@@ -65,6 +68,11 @@ public class FXMLDocumentController implements Initializable {
         //TODO: convert to dragged call
         this.contrastSlider.valueProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
             if (model.changeContrast(newValue.doubleValue())) {
+                this.refreshImageViewer();
+            }
+        });
+        this.saturationSlider.valueProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
+            if (model.changeSaturation(newValue.doubleValue())) {
                 this.refreshImageViewer();
             }
         });
@@ -125,6 +133,7 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void helpDoc(ActionEvent ignored) {
         logger.log(Level.INFO, "TODO: help document launched");
+        model.OpenHelpDialog();
     }
 
     @FXML
@@ -225,10 +234,12 @@ public class FXMLDocumentController implements Initializable {
     private void resetSliders() {
         this.brightnessSlider.setValue(0);
         this.contrastSlider.setValue(0);
-        logger.log(Level.INFO, "brightness and contrast sliders reset");
+        this.saturationSlider.setValue(0);
+        logger.log(Level.INFO, "brightness, contrast and saturation sliders reset");
     }
 
     public void setStage(Stage stageFromMain) {
         this.stage = stageFromMain;
     }
+
 }

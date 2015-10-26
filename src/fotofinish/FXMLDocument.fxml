@@ -113,7 +113,7 @@
                         <Slider fx:id="brightnessSlider" majorTickUnit="0.5" max="1.0" min="-1.0" minorTickCount="0" orientation="HORIZONTAL" showTickMarks="true" GridPane.rowIndex="1" />
                         <Slider fx:id="contrastSlider" majorTickUnit="0.5" max="1.0" min="-1.0" minorTickCount="0" orientation="HORIZONTAL" showTickMarks="true" GridPane.rowIndex="3" />
                         <Label text="Saturation" GridPane.rowIndex="4" />
-                        <Slider majorTickUnit="0.5" max="1.0" min="-1.0" minorTickCount="0" showTickMarks="true" GridPane.rowIndex="5" />
+                        <Slider fx:id="saturationSlider" majorTickUnit="0.5" max="1.0" min="-1.0" minorTickCount="0" showTickMarks="true" GridPane.rowIndex="5" />
                      </children>
                      <padding>
                         <Insets left="10.0" right="10.0" />
