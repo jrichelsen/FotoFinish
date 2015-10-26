@@ -10,16 +10,17 @@ public class FotoFinish extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLDocument.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("FotoFinishMain.fxml"));
         Parent root = loader.load();
-        FXMLDocumentController controller = loader.getController();
+        FotoFinishMainController controller = loader.getController();
         controller.setStage(stage);
-        stage.setMinHeight(800);
         stage.setMinWidth(600);
+        stage.setMinHeight(800);
         stage.setWidth(1000);
         stage.setHeight(600);
-        stage.setY(0);
         stage.setX(0);
+        stage.setY(0);
+        
         Scene scene = new Scene(root);
 
         stage.setScene(scene);

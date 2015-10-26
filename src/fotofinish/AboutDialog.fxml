@@ -8,12 +8,12 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="330.0" prefWidth="541.0" scaleShape="false" style="-fx-background-color: #E5F7FF; -fx-border-radius: 20; -fx-padding: 10;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="AnchorPane" prefHeight="330.0" prefWidth="541.0" scaleShape="false" style="-fx-background-color: #E5F7FF; -fx-border-radius: 20; -fx-padding: 10;" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Pane layoutX="254.0" layoutY="21.0" prefHeight="224.0" prefWidth="315.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #000000; -fx-border-radius: 20; -fx-background-radius: 20;">
          <children>
             <Label layoutX="100.0" layoutY="33.0" style="-fx-background-color: #FFFFFF;" text="FotoFinish version 1.2" />
-            <Label layoutX="13.0" layoutY="50.0" prefHeight="89.0" prefWidth="289.0" style="-fx-background-color: #FFFFFF;" text="New features:&#10;&#10;- About dialog" textAlignment="JUSTIFY" />
+            <Label layoutX="13.0" layoutY="50.0" prefHeight="108.0" prefWidth="289.0" style="-fx-background-color: #FFFFFF;" text="New features:&#10;- About dialog&#10;- Help dialog&#10;- Custom filter&#10;- Left click to reset sliders" textAlignment="JUSTIFY" />
          </children></Pane>
       <Label layoutX="179.0" layoutY="258.0" prefHeight="89.0" prefWidth="232.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #000000; -fx-label-padding: 10; -fx-border-radius: 20; -fx-background-radius: 20;" text="Software Engineeing project / Fall 2015&#10;University of Notre Dame&#10;Professor Paul McBurney" textAlignment="CENTER" />
       <ImageView fx:id="imageViewerAbout" fitHeight="234.0" fitWidth="212.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">

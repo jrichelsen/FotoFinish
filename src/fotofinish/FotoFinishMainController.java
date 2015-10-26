@@ -1,6 +1,5 @@
 package fotofinish;
 
-import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -22,13 +21,13 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 
-//TODO: Find a better way to have image be refreshed
-public class FXMLDocumentController implements Initializable {
+//TODO: Fix Pixels numberfield
+public class FotoFinishMainController implements Initializable {
 
-    private static final Logger logger = Logger.getLogger(fotofinish.FXMLDocumentController.class.getName());
+    private static final Logger logger = Logger.getLogger(fotofinish.FotoFinishMainController.class.getName());
 
     Stage stage;
-    private FotoFinishModel model = new FotoFinishModel();
+    private final FotoFinishModel model;
 
     @FXML
     private Slider brightnessSlider;
@@ -51,21 +50,19 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private ImageView imageViewer;
     @FXML
-    private ImageView imageViewerAbout;
-    @FXML
     private ScrollPane imageScrollPane;
-    
 
+    public FotoFinishMainController() {
+        this.model = new FotoFinishModel();
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //TODO: WHAT IS BLOCK INCREMENT?
         this.brightnessSlider.valueProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
             if(model.changeBrightness(newValue.doubleValue())) {
                 this.refreshImageViewer();
             }
         });
-
-        //TODO: convert to dragged call
         this.contrastSlider.valueProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
             if (model.changeContrast(newValue.doubleValue())) {
                 this.refreshImageViewer();
@@ -101,8 +98,8 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void filterCustom(ActionEvent ignored) {
-        //TODO: code to create custom filter popup and get arguments for custom filter
-        logger.log(Level.INFO, "TODO: custom filter popup launched");
+        logger.log(Level.INFO, "custom filter popup launched");
+        // TODO: launch custom filter popup and return values (BLOCKING)
         model.applyCustomFilter();
         this.refreshImageViewer();
         this.resetSliders();
@@ -132,13 +129,13 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void helpDoc(ActionEvent ignored) {
-        logger.log(Level.INFO, "TODO: help document launched");
-        model.OpenHelpDialog();
+        logger.log(Level.INFO, "help document launched");
+        model.OpenHelpDocument();
     }
 
     @FXML
     private void aboutDialog(ActionEvent ignored) throws IOException {
-        logger.log(Level.INFO, "TODO: about dialog created");
+        logger.log(Level.INFO, "about dialog created");
         model.OpenAboutDialog();
     }
 
@@ -241,5 +238,4 @@ public class FXMLDocumentController implements Initializable {
     public void setStage(Stage stageFromMain) {
         this.stage = stageFromMain;
     }
-
 }

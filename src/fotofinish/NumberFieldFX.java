@@ -18,6 +18,10 @@ public class NumberFieldFX extends TextField {
         }
     }
 
+    public int getIntValue() {
+        return Integer.parseInt(this.getText());
+    }
+
     private boolean validate(String text) {
         return ("".equals(text) || text.matches("[0-9]"));
     }
