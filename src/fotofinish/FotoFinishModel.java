@@ -217,22 +217,29 @@ public class FotoFinishModel {
     public void loadGalleryButterflyImage() {
         //TODO: load buttefly image (carefully)
         logger.log(Level.INFO, "TODO: loaded butterfly gallery image");
+        File file = new File("src/img/butterfly.jpg");
+        this.image = new Image(file.toURI().toString());
     }
 
     public void loadGalleryTeddyBearImage() {
         //TODO: load teddy bear image (carefully)
         logger.log(Level.INFO, "TODO: loaded teddy bear gallery image");
+        File file = new File("src/img/TeddyBear.jpg");
+        this.image = new Image(file.toURI().toString());
     }
 
     public void loadGalleryPrincessImage() {
         //TODO: load princess image (carefully)
-
         logger.log(Level.INFO, "TODO: loaded princess gallery image");
+        File file = new File("src/img/Princess.jpg");
+        this.image = new Image(file.toURI().toString());
     }
 
     public void loadGalleryFirefighterImage() {
         //TODO: load firefighter image (carefully)
         logger.log(Level.INFO, "TODO: loaded firefighter gallery image");
+        File file = new File("src/img/FireFighter.jpg");
+        this.image = new Image(file.toURI().toString());
     }
 
     public void OpenAboutDialog() throws IOException {
