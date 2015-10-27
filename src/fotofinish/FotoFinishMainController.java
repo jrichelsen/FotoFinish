@@ -98,11 +98,8 @@ public class FotoFinishMainController implements Initializable {
 
     @FXML
     private void filterCustom(ActionEvent ignored) {
+        model.launchCustomFilterPopup(this, model);
         logger.log(Level.INFO, "custom filter popup launched");
-        // TODO: launch custom filter popup and return values (BLOCKING)
-        model.applyCustomFilter();
-        this.refreshImageViewer();
-        this.resetSliders();
     }
 
     @FXML
@@ -128,15 +125,16 @@ public class FotoFinishMainController implements Initializable {
     }
 
     @FXML
-    private void helpDoc(ActionEvent ignored) {
+    private void helpDocument(ActionEvent ignored) {
+        model.openHelpDocument();
         logger.log(Level.INFO, "help document launched");
-        model.OpenHelpDocument();
     }
 
     @FXML
     private void aboutDialog(ActionEvent ignored) throws IOException {
+        
+        model.openAboutDialog();
         logger.log(Level.INFO, "about dialog created");
-        model.OpenAboutDialog();
     }
 
     @FXML
@@ -222,7 +220,7 @@ public class FotoFinishMainController implements Initializable {
         logger.log(Level.INFO, "TODO: new file created");
     }
 
-    private void refreshImageViewer() {
+    public void refreshImageViewer() {
         this.imageViewer.setImage(model.getImage());
         logger.log(Level.INFO, "image refreshed");
     }

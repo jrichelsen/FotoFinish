@@ -14,12 +14,6 @@ public class FotoFinish extends Application {
         Parent root = loader.load();
         FotoFinishMainController controller = loader.getController();
         controller.setStage(stage);
-        stage.setMinWidth(600);
-        stage.setMinHeight(800);
-        stage.setWidth(1000);
-        stage.setHeight(600);
-        stage.setX(0);
-        stage.setY(0);
         
         Scene scene = new Scene(root);
 

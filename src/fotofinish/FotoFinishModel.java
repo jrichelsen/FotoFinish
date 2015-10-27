@@ -18,6 +18,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
+import static javax.swing.Spring.height;
 
 public class FotoFinishModel {
 
@@ -39,10 +40,14 @@ public class FotoFinishModel {
     private BrushType brushType;
     private int brushSize;
     private Color brushColor;
+    private double red;
+    private double green;
+    private double blue;
     private double brightness;
     private double contrast;
     private double saturation;
     private final double SLIDER_CHANGE_THRESH = 0.01;
+    private final double RGB_CHANGE_THRESH = 5;
 
     //TODO: how can we better synchronize this with FXML?
     public FotoFinishModel() {
@@ -106,11 +111,57 @@ public class FotoFinishModel {
     }
 
     public void applyInstantFilter() {
-        logger.log(Level.INFO, "applied instant filter");
+        logger.log(Level.INFO, "TODO: applied instant filter");
+    }
+
+    public boolean changeRed(double newRed) {
+        if (Math.abs(this.red - newRed) >= this.RGB_CHANGE_THRESH) {
+            this.red = newRed;
+            this.applyCustomFilter();
+            logger.log(Level.INFO, "red level changed to {0}", this.red);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean changeGreen(double newGreen) {
+        if (Math.abs(this.green - newGreen) >= this.RGB_CHANGE_THRESH) {
+            this.green = newGreen;
+            this.applyCustomFilter();
+            logger.log(Level.INFO, "green level changed to {0}", this.green);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean changeBlue(double newBlue) {
+        if (Math.abs(this.blue - newBlue) >= this.RGB_CHANGE_THRESH) {
+            this.blue = newBlue;
+            this.applyCustomFilter();
+            logger.log(Level.INFO, "blue level changed to {0}", this.blue);
+            return true;
+        }
+        return false;
     }
 
     public void applyCustomFilter() {
-        //TODO: code to apply custom filter (INCLUDING ARGS FROM POPUP) to image
+        BufferedImage RGBBufferedImage = SwingFXUtils.fromFXImage(this.originalImage, null);
+        for (int y = 0; y < RGBBufferedImage.getHeight(); y++) {
+            for (int x = 0; x < RGBBufferedImage.getWidth(); x++) {
+                int RGB = RGBBufferedImage.getRGB(x, y);
+                java.awt.Color oldColor = new java.awt.Color(RGB);
+                int newRed = oldColor.getRed() + (int)Math.round(this.red);
+                int newGreen = oldColor.getGreen() + (int)Math.round(this.green);
+                int newBlue = oldColor.getBlue() + (int)Math.round(this.blue);
+                java.awt.Color newColor = new java.awt.Color(
+                    newRed > 255 ? 255 : (newRed < 0 ? 0 : newRed),
+                    newGreen > 255 ? 255 : (newGreen < 0 ? 0 : newGreen),
+                    newBlue > 255 ? 255 : (newBlue < 0 ? 0 : newBlue)
+                );
+                RGBBufferedImage.setRGB(x, y, newColor.getRGB());
+            }
+        }
+        this.image = SwingFXUtils.toFXImage(RGBBufferedImage, null);
         logger.log(Level.INFO, "applied custom filter");
     }
 
@@ -197,7 +248,7 @@ public class FotoFinishModel {
         this.loadImage(this.galleryFirefighterFile);
     }
 
-    public void OpenAboutDialog() throws IOException {
+    public void openAboutDialog() throws IOException {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AboutDialog.fxml"));
             Parent root1 = (Parent) fxmlLoader.load();
@@ -213,7 +264,7 @@ public class FotoFinishModel {
         }
     }
 
-    public void OpenHelpDocument() {
+    public void openHelpDocument() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("HelpDocument.fxml"));
             Parent root1 = (Parent) fxmlLoader.load();
@@ -224,7 +275,23 @@ public class FotoFinishModel {
             stage.setResizable(false);
             stage.setScene(new Scene(root1));
             stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
+    public void launchCustomFilterPopup(FotoFinishMainController mainController, FotoFinishModel model) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CustomFilterPopup.fxml"));
+            Parent root1 = (Parent) fxmlLoader.load();
+            CustomFilterPopupController controller = fxmlLoader.getController();
+            controller.setMainController(mainController);
+            controller.setModel(model);
+            Stage stage = new Stage();
+            stage.setTitle("Custom Filter");
+            stage.setResizable(false);
+            stage.setScene(new Scene(root1));
+            stage.show();
         } catch (Exception e) {
             e.printStackTrace();
         }
