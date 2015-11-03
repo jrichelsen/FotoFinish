@@ -12,8 +12,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ColorPicker;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
@@ -36,21 +34,13 @@ public class FotoFinishMainController implements Initializable {
     @FXML
     private Slider saturationSlider;
     @FXML
-    private ToggleGroup brushTypeRadioGroup;
-    @FXML
-    private RadioButton brushTypeCircleRadioButton;
-    @FXML
-    private RadioButton brushTypeSpraypaintRadioButton;
-    @FXML
-    private RadioButton brushTypeSquareRadioButton;
-    @FXML
-    private ColorPicker brushColorPicker;
-    @FXML
     private NumberFieldFX brushSizeNumberField;
     @FXML
     private ImageView imageViewer;
     @FXML
-    private ScrollPane imageScrollPane;
+    private ToggleGroup brushTypeToggleGroup;
+    @FXML
+    private ColorPicker brushColorPicker;
 
     public FotoFinishMainController() {
         this.model = new FotoFinishModel();
@@ -76,75 +66,8 @@ public class FotoFinishMainController implements Initializable {
     }
 
     @FXML
-    private void filterGrayscale(ActionEvent ignored) {
-        model.applyGrayscaleFilter();
-        this.refreshImageViewer();
-        this.resetSliders();
-    }
-
-    @FXML
-    private void filterSepia(ActionEvent ignored) {
-        model.applySepiaFilter();
-        this.refreshImageViewer();
-        this.resetSliders();
-    }
-
-    @FXML
-    private void filterInstant(ActionEvent ignored) {
-        model.applyInstantFilter();
-        this.refreshImageViewer();
-        this.resetSliders();
-    }
-
-    @FXML
-    private void filterCustom(ActionEvent ignored) {
-        model.launchCustomFilterPopup(this, model);
-        logger.log(Level.INFO, "custom filter popup launched");
-    }
-
-    @FXML
-    private void filterNone(ActionEvent ignored) {
-        model.resetImageToOriginal();
-        this.refreshImageViewer();
-        this.resetSliders();
-    }
-
-    @FXML
-    private void brushTypeCircle(ActionEvent ignored) {
-        model.setBrushTypeCircle();
-    }
-
-    @FXML
-    private void brushTypeSquare(ActionEvent ignored) {
-        model.setBrushTypeSquare();
-    }
-
-    @FXML
-    private void brushTypeSpraypaint(ActionEvent ignored) {
-        model.setBrushTypeSpraypaint();
-    }
-
-    @FXML
-    private void helpDocument(ActionEvent ignored) {
-        model.openHelpDocument();
-        logger.log(Level.INFO, "help document launched");
-    }
-
-    @FXML
-    private void aboutDialog(ActionEvent ignored) throws IOException {
-        
-        model.openAboutDialog();
-        logger.log(Level.INFO, "about dialog created");
-    }
-
-    @FXML
-    private void brushColor(ActionEvent ignored) {
-        model.changeBrushColor(this.brushColorPicker.getValue());
-    }
-
-    @FXML
-    private void brushSize(ActionEvent ignored) {
-        model.changeBrushSize(Integer.parseInt(this.brushSizeNumberField.getText()));
+    private void newFile(ActionEvent ignored) {
+        logger.log(Level.INFO, "TODO: new file created");
     }
 
     //TODO: make title setting more intelligent
@@ -153,7 +76,7 @@ public class FotoFinishMainController implements Initializable {
         logger.log(Level.INFO, "open file chooser launched");
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Image");
-        fileChooser.getExtensionFilters().add(new ExtensionFilter("Image Files", "*.png")); //TODO: add other types
+        fileChooser.getExtensionFilters().add(new ExtensionFilter("Image Files", "*.bmp", "*.jpg", "*.png")); //TODO: add other types
         File selectedFile = fileChooser.showOpenDialog(null); //TODO: needs value in order to block main window
         if (selectedFile != null) {
             logger.log(Level.INFO, "file {0} choosen in open file chooser", selectedFile);
@@ -199,7 +122,7 @@ public class FotoFinishMainController implements Initializable {
         logger.log(Level.INFO, "save as file chooser launched");
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save Image");
-        fileChooser.getExtensionFilters().add(new ExtensionFilter("Image Files", "*.png")); //TODO: add other types
+        fileChooser.getExtensionFilters().add(new ExtensionFilter("Image Files", "*.bmp", "*.jpg", "*.png"));
         File selectedFile = fileChooser.showSaveDialog(null); //TODO: needs value in order to block main window
         if (selectedFile != null) {
             logger.log(Level.INFO, "file {0} choosen in save as file chooser", selectedFile);
@@ -208,7 +131,7 @@ public class FotoFinishMainController implements Initializable {
             logger.log(Level.INFO, "no file selected in save as file chooser");
         }
     }
-   
+
     @FXML
     private void quit(ActionEvent ignored) {
         logger.log(Level.INFO, "quitting");
@@ -216,21 +139,101 @@ public class FotoFinishMainController implements Initializable {
     }
 
     @FXML
-    private void newFile(ActionEvent ignored) {
-        logger.log(Level.INFO, "TODO: new file created");
+    private void helpDocument(ActionEvent ignored) {
+        model.openHelpDocument();
+    }
+
+    @FXML
+    private void aboutDialog(ActionEvent ignored) throws IOException {
+        model.openAboutDialog();
+        logger.log(Level.INFO, "custom filter popup launched");
+        logger.log(Level.INFO, "help document launched");
+        logger.log(Level.INFO, "about dialog created");
+    }
+
+    @FXML
+    private void filterGrayscale(ActionEvent ignored) {
+        model.applyGrayscaleFilter();
+        this.refreshImageViewer();
+        this.resetSliders();
+    }
+
+    @FXML
+    private void filterSepia(ActionEvent ignored) {
+        model.applySepiaFilter();
+        this.refreshImageViewer();
+        this.resetSliders();
+    }
+
+    @FXML
+    private void filterInstant(ActionEvent ignored) {
+        model.applyInstantFilter();
+        this.refreshImageViewer();
+        this.resetSliders();
+    }
+
+    @FXML
+    private void filterCustom(ActionEvent ignored) {
+        model.launchCustomFilterPopup(this, model);
+    }
+
+    @FXML
+    private void filterNone(ActionEvent ignored) {
+        model.resetImageToOriginal();
+        this.refreshImageViewer();
+        this.resetSliders();
+    }
+
+    @FXML
+    private void resetBrightnessSlider() {
+        this.brightnessSlider.setValue(0);
+        logger.log(Level.INFO, "brightness slider reset");
+    }
+
+    @FXML
+    private void resetContrastSlider() {
+        this.contrastSlider.setValue(0);
+        logger.log(Level.INFO, "contrast slider reset");
+    }
+
+    @FXML
+    private void resetSaturationSlider() {
+        this.saturationSlider.setValue(0);
+        logger.log(Level.INFO, "saturation slider reset");
+    }
+
+    //TODO: make this connect better with FXML default value
+    private void resetSliders() {
+        this.resetBrightnessSlider();
+        this.resetContrastSlider();
+        this.resetSaturationSlider();
+    }
+
+    @FXML
+    private void brushColor(ActionEvent ignored) {
+        model.changeBrushColor(this.brushColorPicker.getValue());
+    }
+
+    private void brushTypeCircle(ActionEvent ignored) {
+        model.setBrushTypeCircle();
+    }
+
+    private void brushTypeSquare(ActionEvent ignored) {
+        model.setBrushTypeSquare();
+    }
+
+    private void brushTypeSpraypaint(ActionEvent ignored) {
+        model.setBrushTypeSpraypaint();
+    }
+
+    @FXML
+    private void brushSize(ActionEvent ignored) {
+        model.changeBrushSize(Integer.parseInt(this.brushSizeNumberField.getText()));
     }
 
     public void refreshImageViewer() {
         this.imageViewer.setImage(model.getImage());
         logger.log(Level.INFO, "image refreshed");
-    }
-
-    //TODO: make this connect better with FXML default value
-    private void resetSliders() {
-        this.brightnessSlider.setValue(0);
-        this.contrastSlider.setValue(0);
-        this.saturationSlider.setValue(0);
-        logger.log(Level.INFO, "brightness, contrast and saturation sliders reset");
     }
 
     public void setStage(Stage stageFromMain) {

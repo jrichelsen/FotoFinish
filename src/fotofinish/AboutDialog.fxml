@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.image.*?>
 <?import java.lang.*?>
@@ -8,18 +9,29 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="330.0" prefWidth="541.0" scaleShape="false" style="-fx-background-color: #E5F7FF; -fx-border-radius: 20; -fx-padding: 10;" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="AnchorPane" maxHeight="400.0" maxWidth="500.0" minHeight="400.0" minWidth="500.0" prefHeight="400.0" prefWidth="500.0" scaleShape="false" style="-fx-background-color: #E5F7FF;" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Pane layoutX="254.0" layoutY="21.0" prefHeight="224.0" prefWidth="315.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #000000; -fx-border-radius: 20; -fx-background-radius: 20;">
-         <children>
-            <Label layoutX="100.0" layoutY="33.0" style="-fx-background-color: #FFFFFF;" text="FotoFinish version 1.2" />
-            <Label layoutX="13.0" layoutY="50.0" prefHeight="108.0" prefWidth="289.0" style="-fx-background-color: #FFFFFF;" text="New features:&#10;- About dialog&#10;- Help dialog&#10;- Custom filter" textAlignment="JUSTIFY" />
-         </children></Pane>
-      <Label layoutX="179.0" layoutY="258.0" prefHeight="89.0" prefWidth="232.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #000000; -fx-label-padding: 10; -fx-border-radius: 20; -fx-background-radius: 20;" text="Software Engineeing project / Fall 2015&#10;University of Notre Dame&#10;Professor Paul McBurney" textAlignment="CENTER" />
-      <ImageView fx:id="imageViewerAbout" fitHeight="234.0" fitWidth="212.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+      <Label alignment="CENTER" contentDisplay="TEXT_ONLY" graphicTextGap="0.0" layoutX="25.0" layoutY="249.0" prefHeight="100.0" prefWidth="450.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #000000; -fx-border-radius: 20; -fx-background-radius: 20;" text="Software Engineeing Project / Fall 2015&#10;University of Notre Dame&#10;Professor Paul McBurney" textAlignment="CENTER" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+      <ImageView fitHeight="175.0" fitWidth="175.0" layoutX="25.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="75.0">
          <image>
-            <Image url="@../img/fotofinish.png" />
+            <Image url="@../img/FotoFinish.png" />
          </image>
       </ImageView>
+      <Label alignment="TOP_LEFT" contentDisplay="TEXT_ONLY" graphicTextGap="0.0" layoutX="35.0" layoutY="259.0" prefHeight="175.0" prefWidth="275.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #000000; -fx-border-radius: 20; -fx-background-radius: 20; -fx-padding: 20;" text="New features:&#10;* Feature 1&#10;* Feature 2&#10;* Feature 3&#10;" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="75.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="79.0" layoutY="14.0" text="FotoFinish v1.3" AnchorPane.topAnchor="14.0">
+         <font>
+            <Font size="45.0" />
+         </font>
+      </Label>
    </children>
+   <rotationAxis>
+      <Point3D />
+   </rotationAxis>
 </AnchorPane>

@@ -18,7 +18,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
-import static javax.swing.Spring.height;
 
 public class FotoFinishModel {
 
@@ -33,29 +32,30 @@ public class FotoFinishModel {
     private File imageFile;
     private Image image;
     private Image originalImage;
-    File galleryButterflyFile = new File("src/img/galleryButterfly.jpg");
-    File galleryTeddyBearFile = new File("src/img/galleryTeddyBear.jpg");
-    File galleryPrincessFile = new File("src/img/galleryPrincess.jpg");
-    File galleryFirefighterFile = new File("src/img/galleryFirefighter.jpg");
-    private BrushType brushType;
-    private int brushSize;
-    private Color brushColor;
     private double red;
     private double green;
     private double blue;
     private double brightness;
     private double contrast;
     private double saturation;
+    File galleryButterflyFile = new File("src/img/galleryButterfly.jpg");
+    File galleryTeddyBearFile = new File("src/img/galleryTeddyBear.jpg");
+    File galleryPrincessFile = new File("src/img/galleryPrincess.jpg");
+    File galleryFirefighterFile = new File("src/img/galleryFirefighter.jpg");
+    private Color brushColor;
+    private BrushType brushType;
+    private int brushSize;
     private final double SLIDER_CHANGE_THRESH = 0.01;
-    private final double RGB_CHANGE_THRESH = 5;
+    private final double RGB_SLIDER_CHANGE_THRESH = 5;
 
     //TODO: how can we better synchronize this with FXML?
     public FotoFinishModel() {
-        this.brushType = BrushType.CIRCLE;
-        this.brushSize = 10;
         this.brightness = 0;
         this.contrast = 0;
         this.saturation = 0;
+        this.brushType = BrushType.CIRCLE;
+        this.brushSize = 10;
+        
     }
 
     public void loadImage(File file) {

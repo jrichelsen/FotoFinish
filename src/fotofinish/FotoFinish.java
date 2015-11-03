@@ -16,7 +16,6 @@ public class FotoFinish extends Application {
         controller.setStage(stage);
         
         Scene scene = new Scene(root);
-
         stage.setScene(scene);
         stage.setTitle("Foto Finish");
         stage.show();
