@@ -18,19 +18,19 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Slider fx:id="redSlider" max="255.0" min="-255.0" />
+            <Slider fx:id="redSlider" max="255.0" min="-255.0" onContextMenuRequested="#resetRedSlider" />
             <Label text="Green">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Slider fx:id="greenSlider" max="255.0" min="-255.0" />
+            <Slider fx:id="greenSlider" max="255.0" min="-255.0" onContextMenuRequested="#resetGreenSlider" />
             <Label text="Blue">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Slider fx:id="blueSlider" max="255.0" min="-255.0" />
+            <Slider fx:id="blueSlider" max="255.0" min="-255.0" onContextMenuRequested="#resetBlueSlider" />
          </children>
       </VBox>
    </children>

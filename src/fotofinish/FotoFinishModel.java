@@ -32,9 +32,9 @@ public class FotoFinishModel {
     private File imageFile;
     private Image image;
     private Image originalImage;
-    private double red;
-    private double green;
-    private double blue;
+    private double redOffset;
+    private double greenOffset;
+    private double blueOffset;
     private double brightness;
     private double contrast;
     private double saturation;
@@ -50,6 +50,9 @@ public class FotoFinishModel {
 
     //TODO: how can we better synchronize this with FXML?
     public FotoFinishModel() {
+        this.redOffset = 0;
+        this.greenOffset = 0;
+        this.blueOffset = 0;
         this.brightness = 0;
         this.contrast = 0;
         this.saturation = 0;
@@ -69,8 +72,20 @@ public class FotoFinishModel {
         }
     }
 
-    public void resetImageToOriginal() {
-        this.image = this.originalImage;
+    public void loadGalleryButterflyImage() {
+        this.loadImage(this.galleryButterflyFile);
+    }
+
+    public void loadGalleryTeddyBearImage() {
+        this.loadImage(this.galleryTeddyBearFile);
+    }
+
+    public void loadGalleryPrincessImage() {
+        this.loadImage(this.galleryPrincessFile);
+    }
+
+    public void loadGalleryFirefighterImage() {
+        this.loadImage(this.galleryFirefighterFile);
     }
 
     public void saveImage() {
@@ -88,8 +103,32 @@ public class FotoFinishModel {
         }
     }
 
-    public Image getImage() {
-        return this.image;
+    public void openHelpDocument() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("HelpDocument.fxml"));
+            Parent root = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Help");
+            stage.setScene(new Scene(root));
+            stage.show();
+            logger.log(Level.INFO, "help document launched");
+        } catch (IOException ioex) {
+            logger.log(Level.SEVERE, "error opening help document", ioex);
+        }
+    }
+
+    public void openAboutDialog() throws IOException {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AboutDialog.fxml"));
+            Parent root = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setTitle("About");
+            stage.setScene(new Scene(root));
+            stage.show();
+            logger.log(Level.INFO, "about dialog created");
+        } catch (IOException ioex) {
+            logger.log(Level.SEVERE, "error opening about dialog", ioex);
+        }
     }
 
     public void applyGrayscaleFilter() {
@@ -114,31 +153,48 @@ public class FotoFinishModel {
         logger.log(Level.INFO, "TODO: applied instant filter");
     }
 
+    public void launchCustomFilterPopup(FotoFinishMainController mainController, FotoFinishModel model) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CustomFilterPopup.fxml"));
+            Parent root = (Parent) fxmlLoader.load();
+            CustomFilterPopupController controller = fxmlLoader.getController();
+            controller.setMainController(mainController);
+            controller.setModel(model);
+            Stage stage = new Stage();
+            stage.setTitle("Custom Filter");
+            stage.setScene(new Scene(root));
+            stage.show();
+            logger.log(Level.INFO, "custom filter popup launched");
+        } catch (IOException ioex) {
+            logger.log(Level.SEVERE, "error launching custom filter popup", ioex);
+        }
+    }
+
     public boolean changeRed(double newRed) {
-        if (Math.abs(this.red - newRed) >= this.RGB_CHANGE_THRESH) {
-            this.red = newRed;
+        if (Math.abs(this.redOffset - newRed) >= this.RGB_SLIDER_CHANGE_THRESH) {
+            this.redOffset = newRed;
             this.applyCustomFilter();
-            logger.log(Level.INFO, "red level changed to {0}", this.red);
+            logger.log(Level.INFO, "red level changed to {0}", this.redOffset);
             return true;
         }
         return false;
     }
 
     public boolean changeGreen(double newGreen) {
-        if (Math.abs(this.green - newGreen) >= this.RGB_CHANGE_THRESH) {
-            this.green = newGreen;
+        if (Math.abs(this.greenOffset - newGreen) >= this.RGB_SLIDER_CHANGE_THRESH) {
+            this.greenOffset = newGreen;
             this.applyCustomFilter();
-            logger.log(Level.INFO, "green level changed to {0}", this.green);
+            logger.log(Level.INFO, "green level changed to {0}", this.greenOffset);
             return true;
         }
         return false;
     }
 
     public boolean changeBlue(double newBlue) {
-        if (Math.abs(this.blue - newBlue) >= this.RGB_CHANGE_THRESH) {
-            this.blue = newBlue;
+        if (Math.abs(this.blueOffset - newBlue) >= this.RGB_SLIDER_CHANGE_THRESH) {
+            this.blueOffset = newBlue;
             this.applyCustomFilter();
-            logger.log(Level.INFO, "blue level changed to {0}", this.blue);
+            logger.log(Level.INFO, "blue level changed to {0}", this.blueOffset);
             return true;
         }
         return false;
@@ -150,9 +206,9 @@ public class FotoFinishModel {
             for (int x = 0; x < RGBBufferedImage.getWidth(); x++) {
                 int RGB = RGBBufferedImage.getRGB(x, y);
                 java.awt.Color oldColor = new java.awt.Color(RGB);
-                int newRed = oldColor.getRed() + (int)Math.round(this.red);
-                int newGreen = oldColor.getGreen() + (int)Math.round(this.green);
-                int newBlue = oldColor.getBlue() + (int)Math.round(this.blue);
+                int newRed = oldColor.getRed() + (int)Math.round(this.redOffset);
+                int newGreen = oldColor.getGreen() + (int)Math.round(this.greenOffset);
+                int newBlue = oldColor.getBlue() + (int)Math.round(this.blueOffset);
                 java.awt.Color newColor = new java.awt.Color(
                     newRed > 255 ? 255 : (newRed < 0 ? 0 : newRed),
                     newGreen > 255 ? 255 : (newGreen < 0 ? 0 : newGreen),
@@ -207,6 +263,11 @@ public class FotoFinishModel {
         logger.log(Level.INFO, "brighness, contast, and saturation levels updated image");
     }
 
+    public void changeBrushColor(Color newBrushColor) {
+        this.brushColor = newBrushColor;
+        logger.log(Level.INFO, "brush color set to {0}", this.brushColor);
+    }
+
     public void setBrushTypeCircle() {
         this.brushType = BrushType.CIRCLE;
         logger.log(Level.INFO, "brush type set to circle");
@@ -222,78 +283,16 @@ public class FotoFinishModel {
         logger.log(Level.INFO, "brush type set to spraypaint");
     }
 
-    public void changeBrushColor(Color newBrushColor) {
-        this.brushColor = newBrushColor;
-        logger.log(Level.INFO, "brush color set to {0}", this.brushColor);
-    }
-
     public void changeBrushSize(int newBrushSize) {
         this.brushSize = newBrushSize;
         logger.log(Level.INFO, "brush size set to {0}", this.brushSize);
     }
 
-    public void loadGalleryButterflyImage() {
-        this.loadImage(this.galleryButterflyFile);
-    }
+    public Image getImage() {
+        return this.image;
+    } 
 
-    public void loadGalleryTeddyBearImage() {
-        this.loadImage(this.galleryTeddyBearFile);
-    }
-
-    public void loadGalleryPrincessImage() {
-        this.loadImage(this.galleryPrincessFile);
-    }
-
-    public void loadGalleryFirefighterImage() {
-        this.loadImage(this.galleryFirefighterFile);
-    }
-
-    public void openAboutDialog() throws IOException {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AboutDialog.fxml"));
-            Parent root1 = (Parent) fxmlLoader.load();
-            Stage stage = new Stage();
-            stage.setTitle("About");
-            stage.setWidth(650);
-            stage.setHeight(450);
-            stage.setResizable(false);
-            stage.setScene(new Scene(root1));
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void openHelpDocument() {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("HelpDocument.fxml"));
-            Parent root1 = (Parent) fxmlLoader.load();
-            Stage stage = new Stage();
-            stage.setTitle("About");
-            stage.setWidth(650);
-            stage.setHeight(450);
-            stage.setResizable(false);
-            stage.setScene(new Scene(root1));
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void launchCustomFilterPopup(FotoFinishMainController mainController, FotoFinishModel model) {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CustomFilterPopup.fxml"));
-            Parent root1 = (Parent) fxmlLoader.load();
-            CustomFilterPopupController controller = fxmlLoader.getController();
-            controller.setMainController(mainController);
-            controller.setModel(model);
-            Stage stage = new Stage();
-            stage.setTitle("Custom Filter");
-            stage.setResizable(false);
-            stage.setScene(new Scene(root1));
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void resetImageToOriginal() {
+        this.image = this.originalImage;
     }
 }

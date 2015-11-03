@@ -146,9 +146,6 @@ public class FotoFinishMainController implements Initializable {
     @FXML
     private void aboutDialog(ActionEvent ignored) throws IOException {
         model.openAboutDialog();
-        logger.log(Level.INFO, "custom filter popup launched");
-        logger.log(Level.INFO, "help document launched");
-        logger.log(Level.INFO, "about dialog created");
     }
 
     @FXML
@@ -184,6 +181,13 @@ public class FotoFinishMainController implements Initializable {
         this.resetSliders();
     }
 
+    //TODO: make this connect better with FXML default value
+    private void resetSliders() {
+        this.resetBrightnessSlider();
+        this.resetContrastSlider();
+        this.resetSaturationSlider();
+    }
+
     @FXML
     private void resetBrightnessSlider() {
         this.brightnessSlider.setValue(0);
@@ -200,13 +204,6 @@ public class FotoFinishMainController implements Initializable {
     private void resetSaturationSlider() {
         this.saturationSlider.setValue(0);
         logger.log(Level.INFO, "saturation slider reset");
-    }
-
-    //TODO: make this connect better with FXML default value
-    private void resetSliders() {
-        this.resetBrightnessSlider();
-        this.resetContrastSlider();
-        this.resetSaturationSlider();
     }
 
     @FXML
