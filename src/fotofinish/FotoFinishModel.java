@@ -12,6 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.effect.ColorAdjust;
+import javafx.scene.effect.Glow;
 import javafx.scene.effect.SepiaTone;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -151,6 +152,17 @@ public class FotoFinishModel {
 
     public void applyInstantFilter() {
         logger.log(Level.INFO, "TODO: applied instant filter");
+        ImageView processor = new ImageView(this.originalImage);
+        
+        ColorAdjust lowSaturation = new ColorAdjust();
+        lowSaturation.setSaturation(-0.3);
+        processor.setEffect(lowSaturation);
+        processor.setEffect(new Glow(0.3));
+        
+        this.image = processor.snapshot(null, null); //TODO: what is first parameter?
+        this.changeBlue(30);
+        this.changeRed(-30);
+        logger.log(Level.INFO, "applied grayscale filter");
     }
 
     public void launchCustomFilterPopup(FotoFinishMainController mainController, FotoFinishModel model) {
