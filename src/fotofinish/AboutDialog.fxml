@@ -20,7 +20,7 @@
             <Image url="@../img/FotoFinish.png" />
          </image>
       </ImageView>
-      <Label alignment="TOP_LEFT" contentDisplay="TEXT_ONLY" graphicTextGap="0.0" layoutX="35.0" layoutY="259.0" prefHeight="175.0" prefWidth="275.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #000000; -fx-border-radius: 20; -fx-background-radius: 20; -fx-padding: 20;" text="New features:&#10;* Feature 1&#10;* Feature 2&#10;* Feature 3&#10;" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="75.0">
+      <Label alignment="TOP_LEFT" contentDisplay="TEXT_ONLY" graphicTextGap="0.0" layoutX="35.0" layoutY="259.0" prefHeight="175.0" prefWidth="275.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #000000; -fx-border-radius: 20; -fx-background-radius: 20; -fx-padding: 20;" text="New features:&#10;* Instant filter&#10;* Right click to reset sliders&#10;* Image zooming&#10;" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="75.0">
          <font>
             <Font size="14.0" />
          </font>
