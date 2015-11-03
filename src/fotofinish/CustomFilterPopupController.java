@@ -28,17 +28,17 @@ public class CustomFilterPopupController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         this.redSlider.valueProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
             if(model.changeRed(newValue.doubleValue())) {
-                mainController.refreshImageViewer();
+                mainController.refreshImageView();
             }
         });
         this.blueSlider.valueProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
             if (model.changeBlue(newValue.doubleValue())) {
-                mainController.refreshImageViewer();
+                mainController.refreshImageView();
             }
         });
         this.greenSlider.valueProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
             if (model.changeGreen(newValue.doubleValue())) {
-                mainController.refreshImageViewer();
+                mainController.refreshImageView();
             }
         });
     }

@@ -7,14 +7,21 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ColorPicker;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.ScrollEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
@@ -36,11 +43,15 @@ public class FotoFinishMainController implements Initializable {
     @FXML
     private NumberFieldFX brushSizeNumberField;
     @FXML
-    private ImageView imageViewer;
-    @FXML
     private ToggleGroup brushTypeToggleGroup;
     @FXML
     private ColorPicker brushColorPicker;
+    @FXML
+    private ScrollPane scrollPane;
+    @FXML
+    private ImageView imageView;
+
+    private final DoubleProperty zoom = new SimpleDoubleProperty(200);
 
     public FotoFinishMainController() {
         this.model = new FotoFinishModel();
@@ -50,17 +61,30 @@ public class FotoFinishMainController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         this.brightnessSlider.valueProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
             if(model.changeBrightness(newValue.doubleValue())) {
-                this.refreshImageViewer();
+                this.refreshImageView();
             }
         });
         this.contrastSlider.valueProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
             if (model.changeContrast(newValue.doubleValue())) {
-                this.refreshImageViewer();
+                this.refreshImageView();
             }
         });
         this.saturationSlider.valueProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
             if (model.changeSaturation(newValue.doubleValue())) {
-                this.refreshImageViewer();
+                this.refreshImageView();
+            }
+        });
+
+        this.imageView.preserveRatioProperty().set(true);
+        this.zoom.addListener((Observable arg0) -> {
+            this.imageView.setFitWidth(this.zoom.get() * 3);
+            this.imageView.setFitHeight(this.zoom.get() * 3);
+        });
+        this.scrollPane.addEventFilter(ScrollEvent.ANY, (ScrollEvent event) -> {
+            if (event.getDeltaY() > 0) {
+                this.zoom.set(this.zoom.get() * 1.1);
+            } else if (event.getDeltaY() < 0) {
+                this.zoom.set(this.zoom.get() / 1.1);
             }
         });
     }
@@ -81,7 +105,7 @@ public class FotoFinishMainController implements Initializable {
         if (selectedFile != null) {
             logger.log(Level.INFO, "file {0} choosen in open file chooser", selectedFile);
             model.loadImage(selectedFile);
-            this.refreshImageViewer();
+            this.refreshImageView();
             this.stage.setTitle("Foto Finish - " + selectedFile);
         } else {
             logger.log(Level.INFO, "no file selected in open file chooser");
@@ -91,25 +115,25 @@ public class FotoFinishMainController implements Initializable {
     @FXML
     private void galleryButterfly(ActionEvent ignored) {
         model.loadGalleryButterflyImage();
-        this.refreshImageViewer();
+        this.refreshImageView();
     }
 
     @FXML
     private void galleryTeddyBear(ActionEvent ignored) {
         model.loadGalleryTeddyBearImage();
-        this.refreshImageViewer();
+        this.refreshImageView();
     }
 
     @FXML
     private void galleryPrincess(ActionEvent ignored) {
         model.loadGalleryPrincessImage();
-        this.refreshImageViewer();
+        this.refreshImageView();
     }
 
     @FXML
     private void galleryFirefighter(ActionEvent ignored) {
         model.loadGalleryFirefighterImage();
-        this.refreshImageViewer();
+        this.refreshImageView();
     }
 
     @FXML
@@ -151,21 +175,21 @@ public class FotoFinishMainController implements Initializable {
     @FXML
     private void filterGrayscale(ActionEvent ignored) {
         model.applyGrayscaleFilter();
-        this.refreshImageViewer();
+        this.refreshImageView();
         this.resetSliders();
     }
 
     @FXML
     private void filterSepia(ActionEvent ignored) {
         model.applySepiaFilter();
-        this.refreshImageViewer();
+        this.refreshImageView();
         this.resetSliders();
     }
 
     @FXML
     private void filterInstant(ActionEvent ignored) {
         model.applyInstantFilter();
-        this.refreshImageViewer();
+        this.refreshImageView();
         this.resetSliders();
     }
 
@@ -177,7 +201,7 @@ public class FotoFinishMainController implements Initializable {
     @FXML
     private void filterNone(ActionEvent ignored) {
         model.resetImageToOriginal();
-        this.refreshImageViewer();
+        this.refreshImageView();
         this.resetSliders();
     }
 
@@ -228,8 +252,8 @@ public class FotoFinishMainController implements Initializable {
         model.changeBrushSize(Integer.parseInt(this.brushSizeNumberField.getText()));
     }
 
-    public void refreshImageViewer() {
-        this.imageViewer.setImage(model.getImage());
+    public void refreshImageView() {
+        this.imageView.setImage(model.getImage());
         logger.log(Level.INFO, "image refreshed");
     }
 

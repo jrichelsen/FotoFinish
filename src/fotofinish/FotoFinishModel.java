@@ -137,32 +137,34 @@ public class FotoFinishModel {
 
         ColorAdjust grayscaleTone = new ColorAdjust();
         grayscaleTone.setSaturation(-1);
-
         processor.setEffect(grayscaleTone);
+
         this.image = processor.snapshot(null, null); //TODO: what is first parameter?
         logger.log(Level.INFO, "applied grayscale filter");
     }
 
     public void applySepiaFilter() {
         ImageView processor = new ImageView(this.originalImage);
+
         processor.setEffect(new SepiaTone());
+
         this.image = processor.snapshot(null, null); //TODO: what is first parameter?
         logger.log(Level.INFO, "applied sepia filter");
     }
 
     public void applyInstantFilter() {
-        logger.log(Level.INFO, "TODO: applied instant filter");
         ImageView processor = new ImageView(this.originalImage);
-        
+
         ColorAdjust lowSaturation = new ColorAdjust();
         lowSaturation.setSaturation(-0.3);
         processor.setEffect(lowSaturation);
         processor.setEffect(new Glow(0.3));
-        
+
         this.image = processor.snapshot(null, null); //TODO: what is first parameter?
-        this.changeBlue(30);
+
         this.changeRed(-30);
-        logger.log(Level.INFO, "applied grayscale filter");
+        this.changeBlue(30);
+        logger.log(Level.INFO, "applied instant filter");
     }
 
     public void launchCustomFilterPopup(FotoFinishMainController mainController, FotoFinishModel model) {
