@@ -8,11 +8,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="515.0" prefWidth="589.0" scaleShape="false" style="-fx-background-color: #E5F7FF; -fx-border-radius: 20; -fx-padding: 10;" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="AnchorPane" prefHeight="273.0" prefWidth="589.0" scaleShape="false" style="-fx-background-color: #E5F7FF; -fx-border-radius: 20; -fx-padding: 10;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Pane layoutX="21.0" layoutY="21.0" prefHeight="467.0" prefWidth="548.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #000000; -fx-border-radius: 20; -fx-background-radius: 20;">
+      <Pane layoutX="21.0" layoutY="9.0" prefHeight="300.0" prefWidth="548.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #000000; -fx-border-radius: 20; -fx-background-radius: 20;">
          <children>
-            <Label layoutX="10.0" layoutY="15.0" prefHeight="438.0" prefWidth="524.0" style="-fx-background-color: #FFFFFF;" text="Opening File:&#10;Go to File-&gt;Open and select the appropriate PNG file&#10;&#10;Opening Gallery Image&#10;Go to File-&gt;Gallery and choose your desired image&#10;&#10;Saving File:&#10;Click File-&gt;Save or File-&gt;Save As to save the manipulated image back to hard disk&#10;&#10;Adjusting brighness, contrast, and saturation:&#10;Use the sliders to adjust&#10;&#10;Adding Filters to Image:&#10;Select the desired filter on the left hand side of the window. When you apply a filter, the brightness, contrast, and saturation sliders will be reset.&#10;&#10;" textAlignment="JUSTIFY" wrapText="true" />
+            <Label layoutX="12.0" layoutY="14.0" prefHeight="277.0" prefWidth="524.0" style="-fx-background-color: #FFFFFF;" text="Opening File:&#10;Go to File-&gt;Open and select the appropriate PNG file&#10;&#10;Opening Gallery Image&#10;Go to File-&gt;Gallery and choose your desired image&#10;&#10;Saving File:&#10;Click File-&gt;Save or File-&gt;Save As to save the manipulated image back to hard disk&#10;&#10;Adjusting brighness, contrast, and saturation:&#10;Use the sliders to adjust&#10;&#10;Adding Filters to Image:&#10;Select the desired filter on the left hand side of the window. When you apply a filter, the brightness, contrast, and saturation sliders will be reset.&#10;&#10;" textAlignment="JUSTIFY" wrapText="true" />
          </children></Pane>
    </children>
 </AnchorPane>

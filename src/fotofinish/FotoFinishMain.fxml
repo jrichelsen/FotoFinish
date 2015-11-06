@@ -10,7 +10,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="700.0" minWidth="600.0" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fotofinish.FotoFinishMainController">
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="700.0" minWidth="600.0" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fotofinish.FotoFinishMainController">
    <top>
       <MenuBar prefHeight="0.0" prefWidth="1034.0" BorderPane.alignment="CENTER">
         <menus>
@@ -159,7 +159,7 @@
                               </ToggleButton>
                               <ToggleButton contentDisplay="CENTER" mnemonicParsing="false" style="-fx-pref-width: 50; -fx-pref-height: 50; -fx-background-image: url(&quot;img/rectangle.png&quot;); -fx-background-size: cover;" textAlignment="CENTER" toggleGroup="$brushTypeToggleGroup" GridPane.columnIndex="1" />
                               <ToggleButton contentDisplay="CENTER" mnemonicParsing="false" style="-fx-pref-width: 50; -fx-pref-height: 50; -fx-background-image: url(&quot;img/brush.png&quot;); -fx-background-size: cover;" textAlignment="CENTER" toggleGroup="$brushTypeToggleGroup" GridPane.rowIndex="1" />
-                              <ToggleButton contentDisplay="CENTER" mnemonicParsing="false" style="-fx-pref-width: 50; -fx-pref-height: 50; -fx-background-image: url(&quot;img/spray_can.png&quot;); -fx-background-size: cover;" textAlignment="CENTER" toggleGroup="$brushTypeToggleGroup" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <ToggleButton contentDisplay="CENTER" mnemonicParsing="false" style="-fx-pref-width: 50; -fx-pref-height: 50; -fx-background-image: url(&quot;img/spraycan.png&quot;); -fx-background-size: cover;" textAlignment="CENTER" toggleGroup="$brushTypeToggleGroup" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                            </children>
                         </GridPane>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-spacing: 15;">
