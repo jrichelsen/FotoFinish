@@ -7,8 +7,8 @@ It can be downloaded here: http://www.oracle.com/technetwork/java/javase/downloa
 
 The FotoFinish.jar file is an executable that you can download, save, and run on any operating system.
 
-New Features in 1.2
+New Features in 1.3
 --------------------
-- About dialog
-- Help dialog
-- Custom filter
+- zooming in on image
+- instant filter
+- reset for the sliders

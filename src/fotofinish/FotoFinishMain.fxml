@@ -172,9 +172,9 @@
                   </VBox>
                </children>
             </VBox>
-            <ScrollPane>
+            <ScrollPane fx:id="scrollPane">
                <content>
-                  <ImageView fx:id="imageViewer" fitHeight="1000.0" fitWidth="1000.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="imageView" pickOnBounds="true" preserveRatio="true" />
                </content>
             </ScrollPane>
          </children>
