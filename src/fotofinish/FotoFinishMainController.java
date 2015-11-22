@@ -91,6 +91,7 @@ public class FotoFinishMainController implements Initializable {
 
         this.testChangeBrightnessMin();
         this.testChangeBrightnessMax();
+        this.testResetImageToOriginal();
     }
 
     @FXML
@@ -277,7 +278,7 @@ public class FotoFinishMainController implements Initializable {
         }
         return true;
     }
-
+        
     private void describeImage(Image img) {
         PixelReader pixRead = img.getPixelReader();
         for (int y = 0; y < img.getHeight(); y++) {
@@ -303,4 +304,35 @@ public class FotoFinishMainController implements Initializable {
         instance.changeBrightness(newBrightness);
         System.out.println(this.isOneColor(instance.getImage(), Color.WHITE));
     }
+      /*
+    public void testGetImage()
+    {
+        System.out.println("GetImage test");
+        double newBrightness = 1;
+        FotoFinishModel instance = new FotoFinishModel();
+        instance.loadGalleryButterflyImage();
+        instance.changeBrightness(newBrightness);
+        Image testGetImage = instance.getImage();
+        testGetImage.equalszoom)
+        
+        
+    }
+    */
+    public void testResetImageToOriginal() {
+        System.out.println("Test ResetImage To Original");
+        double newBrightness = 1;
+        FotoFinishModel instance = new FotoFinishModel();
+        instance.loadGalleryButterflyImage();
+        Image InicialImage = instance.getImage();
+        instance.changeBrightness(newBrightness);
+        instance.resetImageToOriginal();
+        Image ImageAfterReset = instance.getImage();
+        instance.loadGalleryButterflyImage();
+        if(ImageAfterReset.equals(InicialImage))System.out.println(true);
+        else System.out.println(false);
+        
+         
+        
+    }
+    
 }
