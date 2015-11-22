@@ -90,6 +90,7 @@ public class FotoFinishMainController implements Initializable {
         });
 
         this.testChangeBrightnessMin();
+        this.testChangeBrightnessMax();
     }
 
     @FXML
@@ -293,5 +294,13 @@ public class FotoFinishMainController implements Initializable {
         instance.loadGalleryButterflyImage();
         instance.changeBrightness(newBrightness);
         System.out.println(this.isOneColor(instance.getImage(), Color.BLACK));
+    }
+    public void testChangeBrightnessMax() {
+        System.out.println("changeBrightness to max");
+        double newBrightness = 1;
+        FotoFinishModel instance = new FotoFinishModel();
+        instance.loadGalleryButterflyImage();
+        instance.changeBrightness(newBrightness);
+        System.out.println(this.isOneColor(instance.getImage(), Color.WHITE));
     }
 }

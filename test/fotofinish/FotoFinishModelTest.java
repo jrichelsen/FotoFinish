@@ -72,11 +72,9 @@ public class FotoFinishModelTest {
         System.out.println("changeBrightness to max");
         double newBrightness = 1;
         FotoFinishModel instance = new FotoFinishModel();
-        boolean expResult = false;
-        boolean result = instance.changeBrightness(newBrightness);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        instance.loadGalleryButterflyImage();
+        instance.changeBrightness(newBrightness);
+        assertTrue(this.isOneColor(instance.getImage(), Color.WHITE));
     }
 
     @Test
