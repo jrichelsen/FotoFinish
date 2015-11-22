@@ -7,21 +7,22 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
-import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.PixelReader;
 import javafx.scene.input.ScrollEvent;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
@@ -87,6 +88,8 @@ public class FotoFinishMainController implements Initializable {
                 this.zoom.set(this.zoom.get() / 1.1);
             }
         });
+
+        this.testChangeBrightnessMin();
     }
 
     @FXML
@@ -259,5 +262,36 @@ public class FotoFinishMainController implements Initializable {
 
     public void setStage(Stage stageFromMain) {
         this.stage = stageFromMain;
+    }
+
+    private boolean isOneColor(Image img, Color desiredColor) {
+        PixelReader pixRead = img.getPixelReader();
+        for (int y = 0; y < img.getHeight(); y++) {
+            for (int x = 0; x < img.getWidth(); x++) {
+                Color pixelColor = pixRead.getColor(x, y);
+                if (!pixelColor.equals(desiredColor)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private void describeImage(Image img) {
+        PixelReader pixRead = img.getPixelReader();
+        for (int y = 0; y < img.getHeight(); y++) {
+            for (int x = 0; x < img.getWidth(); x++) {
+                System.out.println(pixRead.getColor(x, y));
+            }
+        }
+    }
+
+    public void testChangeBrightnessMin() {
+        System.out.println("changeBrightness to min");
+        double newBrightness = -1;
+        FotoFinishModel instance = new FotoFinishModel();
+        instance.loadGalleryButterflyImage();
+        instance.changeBrightness(newBrightness);
+        System.out.println(this.isOneColor(instance.getImage(), Color.BLACK));
     }
 }
