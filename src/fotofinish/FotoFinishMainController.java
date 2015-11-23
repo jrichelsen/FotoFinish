@@ -1,6 +1,8 @@
 package fotofinish;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -26,6 +28,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
+import static org.junit.Assert.*;
 
 //TODO: Fix Pixels numberfield
 public class FotoFinishMainController implements Initializable {
@@ -91,7 +94,9 @@ public class FotoFinishMainController implements Initializable {
 
         this.testChangeBrightnessMin();
         this.testChangeBrightnessMax();
+        this.testGetImage();
         this.testResetImageToOriginal();
+        this.testSaveImageAs();
     }
 
     @FXML
@@ -278,61 +283,69 @@ public class FotoFinishMainController implements Initializable {
         }
         return true;
     }
-        
-    private void describeImage(Image img) {
-        PixelReader pixRead = img.getPixelReader();
-        for (int y = 0; y < img.getHeight(); y++) {
-            for (int x = 0; x < img.getWidth(); x++) {
-                System.out.println(pixRead.getColor(x, y));
-            }
-        }
-    }
 
     public void testChangeBrightnessMin() {
         System.out.println("changeBrightness to min");
         double newBrightness = -1;
-        FotoFinishModel instance = new FotoFinishModel();
-        instance.loadGalleryButterflyImage();
-        instance.changeBrightness(newBrightness);
-        System.out.println(this.isOneColor(instance.getImage(), Color.BLACK));
+        FotoFinishModel testModel = new FotoFinishModel();
+
+        testModel.loadGalleryButterflyImage();
+        testModel.changeBrightness(newBrightness);
+        assertTrue(this.isOneColor(testModel.getImage(), Color.BLACK));
     }
+
     public void testChangeBrightnessMax() {
         System.out.println("changeBrightness to max");
         double newBrightness = 1;
-        FotoFinishModel instance = new FotoFinishModel();
-        instance.loadGalleryButterflyImage();
-        instance.changeBrightness(newBrightness);
-        System.out.println(this.isOneColor(instance.getImage(), Color.WHITE));
+        FotoFinishModel testModel = new FotoFinishModel();
+
+        testModel.loadGalleryButterflyImage();
+        testModel.changeBrightness(newBrightness);
+        assertTrue(this.isOneColor(testModel.getImage(), Color.WHITE));
     }
-      /*
-    public void testGetImage()
-    {
-        System.out.println("GetImage test");
-        double newBrightness = 1;
-        FotoFinishModel instance = new FotoFinishModel();
-        instance.loadGalleryButterflyImage();
-        instance.changeBrightness(newBrightness);
-        Image testGetImage = instance.getImage();
-        testGetImage.equalszoom)
-        
-        
+
+    public void testGetImage() {
+        System.out.println("getImage test");
+        FotoFinishModel testModel = new FotoFinishModel();
+
+        testModel.loadGalleryButterflyImage();
+        assertNotNull(testModel.getImage());
     }
-    */
+
     public void testResetImageToOriginal() {
-        System.out.println("Test ResetImage To Original");
+        System.out.println("resetImageToOriginal test");
         double newBrightness = 1;
-        FotoFinishModel instance = new FotoFinishModel();
-        instance.loadGalleryButterflyImage();
-        Image InicialImage = instance.getImage();
-        instance.changeBrightness(newBrightness);
-        instance.resetImageToOriginal();
-        Image ImageAfterReset = instance.getImage();
-        instance.loadGalleryButterflyImage();
-        if(ImageAfterReset.equals(InicialImage))System.out.println(true);
-        else System.out.println(false);
-        
-         
-        
+        FotoFinishModel testModel = new FotoFinishModel();
+
+        testModel.loadGalleryButterflyImage();
+        Image initialImage = testModel.getImage();
+
+        testModel.changeBrightness(newBrightness);
+
+        testModel.resetImageToOriginal();
+        Image resetImage = testModel.getImage();
+        assertEquals(initialImage, resetImage);
     }
-    
+
+    public void testSaveImageAs() {
+        System.out.println("saveImageAs test");
+        double newBrightness = 1;
+        File savePath = new File("test/regression.png");
+        FotoFinishModel testModel = new FotoFinishModel();
+
+        testModel.loadGalleryButterflyImage();
+        testModel.changeBrightness(newBrightness);
+        testModel.saveImageAs(savePath);
+
+        Image savedImage;
+        try {
+            savedImage = new Image(new FileInputStream(savePath));
+        } catch (FileNotFoundException fnfex) {
+            System.out.println(false);
+            return;
+        }
+        assertEquals(savedImage.getHeight(), testModel.getImage().getHeight(), 0);
+        assertEquals(savedImage.getWidth(), testModel.getImage().getWidth(), 0);
+        assertTrue(this.isOneColor(savedImage, Color.WHITE));
+    }
 }
