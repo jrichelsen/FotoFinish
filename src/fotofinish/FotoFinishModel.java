@@ -1,6 +1,7 @@
 package fotofinish;
 
 import java.awt.image.BufferedImage;
+import static java.awt.image.BufferedImage.TYPE_INT_RGB;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -298,16 +299,32 @@ public class FotoFinishModel {
         int nPixelsAround = 0;
         int height = (int)this.originalImage.getHeight();
         int width = (int)this.originalImage.getWidth();
+        int accumR = 0;
+        int accumG = 0;
+        int accumB = 0;
+        BufferedImage before = SwingFXUtils.fromFXImage(this.originalImage, null);
 
         for (int scanY = y - radius; scanY <= y + radius; scanY++) {
             for (int scanX = x - radius; scanX <= x + radius; scanX++) {
-                if (scanX >= 0 && scanY >= 0 && scanX < width && scanY < height) {
+                if (scanX >= 0 && scanY >= 0 && scanX < width && scanY < height && !(scanX == x && scanY == y)) {
+                    int rgb = before.getRGB(scanX, scanY);
+                    java.awt.Color color = new java.awt.Color(rgb);
+                    accumR += color.getRed();
+                    accumG += color.getGreen();
+                    accumB += color.getBlue();
                     nPixelsAround++;
                 }
             }
         }
-        nPixelsAround--;
+        accumR /= nPixelsAround;
+        accumG /= nPixelsAround;
+        accumB /= nPixelsAround;
+        java.awt.Color newColor = new java.awt.Color(accumR, accumG, accumB);
+        int newRGB = newColor.getRGB();
 
+        BufferedImage after = SwingFXUtils.fromFXImage(this.image, null);
+        after.setRGB(x, y, newRGB);
+        this.image = SwingFXUtils.toFXImage(after, null);
         return nPixelsAround;
     }
 

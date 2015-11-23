@@ -115,8 +115,8 @@ public class FotoFinishMainController implements Initializable {
 
         // gaussian blur tests
         this.testSliderCallsFunction();
-        this.testPixelsChanged();
-        this.testCorrectPixels();
+        //this.testPixelsChanged();
+        //this.testCorrectPixels();
         this.testBlurOutput();
     }
 
@@ -406,6 +406,8 @@ public class FotoFinishMainController implements Initializable {
         File fImage = new File("test/before4x4.png");
         FotoFinishModel testModel = new FotoFinishModel();
         testModel.loadImage(fImage);
+        printImage(SwingFXUtils.fromFXImage(testModel.getImage(), null));
+        System.out.println("");
         testModel.applyGaussianBlur(1);
 
         Image after;
@@ -415,6 +417,9 @@ public class FotoFinishMainController implements Initializable {
             System.out.println(false);
             return;
         }
+        printImage(SwingFXUtils.fromFXImage(testModel.getImage(), null));
+        System.out.println("");
+        printImage(SwingFXUtils.fromFXImage(after, null));
         
         assertTrue(compareImages(SwingFXUtils.fromFXImage(testModel.getImage(), null), SwingFXUtils.fromFXImage(after, null)));
     }
@@ -440,4 +445,18 @@ public class FotoFinishMainController implements Initializable {
 
   return true;
 }
+    public static void printImage(BufferedImage imgA) {
+  // The images must be the same size.
+    int width = imgA.getWidth();
+    int height = imgA.getHeight();
+
+    // Loop over every pixel.
+    for (int y = 0; y < height; y++) {
+      for (int x = 0; x < width; x++) {
+        java.awt.Color selectColor = new java.awt.Color(imgA.getRGB(x, y));
+        System.out.print(selectColor.getGreen() + " ");
+      }
+        System.out.println("");
+    }
+   }
 }
