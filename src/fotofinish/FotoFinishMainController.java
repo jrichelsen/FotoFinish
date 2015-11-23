@@ -45,6 +45,8 @@ public class FotoFinishMainController implements Initializable {
     @FXML
     private Slider saturationSlider;
     @FXML
+    private Slider gaussianBlurSlider;
+    @FXML
     private NumberFieldFX brushSizeNumberField;
     @FXML
     private ToggleGroup brushTypeToggleGroup;
@@ -78,6 +80,11 @@ public class FotoFinishMainController implements Initializable {
                 this.refreshImageView();
             }
         });
+        this.saturationSlider.valueProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
+            if (model.changeSaturation(newValue.doubleValue())) {
+                this.refreshImageView();
+            }
+        });
 
         this.imageView.preserveRatioProperty().set(true);
         this.zoom.addListener((Observable arg0) -> {
@@ -92,11 +99,15 @@ public class FotoFinishMainController implements Initializable {
             }
         });
 
+        // regression tests
         this.testChangeBrightnessMin();
         this.testChangeBrightnessMax();
         this.testGetImage();
         this.testResetImageToOriginal();
         this.testSaveImageAs();
+
+        // gaussian blur tests
+        this.testSliderCallsFunction();
     }
 
     @FXML
@@ -347,5 +358,13 @@ public class FotoFinishMainController implements Initializable {
         assertEquals(savedImage.getHeight(), testModel.getImage().getHeight(), 0);
         assertEquals(savedImage.getWidth(), testModel.getImage().getWidth(), 0);
         assertTrue(this.isOneColor(savedImage, Color.WHITE));
+    }
+
+    public void testSliderCallsFunction() {
+        System.out.println("slider calls function test");
+        double radius = 3;
+        this.gaussianBlurSlider.setValue(radius);
+        assertEquals(model.getGaussianBlurRadius(), radius, 0);
+        this.gaussianBlurSlider.setValue(0);
     }
 }
