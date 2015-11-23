@@ -280,8 +280,17 @@ public class FotoFinishModel {
         logger.log(Level.INFO, "brighness, contast, and saturation levels updated image");
     }
 
-    public void applyGaussianBlur(double radius) {
+    public int applyGaussianBlur(double radius) {
         this.gaussianBlurRadius = radius;
+        int pixels_changed = 0;
+        return pixels_changed;
+    }
+    
+    public int applyGaussianToPixel (int x, int y, int radius) {
+        /*int nPixelsChanged = 0;
+        
+        return nPixelsChanged;*/
+        return 0;
     }
 
     public double getGaussianBlurRadius() {

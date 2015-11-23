@@ -112,6 +112,7 @@ public class FotoFinishMainController implements Initializable {
 
         // gaussian blur tests
         this.testSliderCallsFunction();
+        this.testPixelsChanged();
     }
 
     @FXML
@@ -370,5 +371,17 @@ public class FotoFinishMainController implements Initializable {
         this.gaussianBlurSlider.setValue(radius);
         assertEquals(model.getGaussianBlurRadius(), radius, 0);
         this.gaussianBlurSlider.setValue(0);
+    }
+    
+    public void testPixelsChanged(){
+        System.out.println("number of pixels changed function test");
+        
+        File fImage = new File("test/sample19x19.png");
+        FotoFinishModel testModel = new FotoFinishModel();
+        testModel.loadImage(fImage);
+        
+        assertEquals(testModel.applyGaussianToPixel(0,0,1), 3);    // Testing corner
+        assertEquals(testModel.applyGaussianToPixel(9,0,1), 5);    // Testing edge
+        assertEquals(testModel.applyGaussianToPixel(9,9,1), 8);    // Testing center
     }
 }
