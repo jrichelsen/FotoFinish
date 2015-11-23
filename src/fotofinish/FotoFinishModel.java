@@ -287,10 +287,22 @@ public class FotoFinishModel {
     }
     
     public int applyGaussianToPixel (int x, int y, int radius) {
-        /*int nPixelsChanged = 0;
-        
-        return nPixelsChanged;*/
-        return 0;
+        int nPixelsAround = 0;
+        int height = (int)this.originalImage.getHeight();
+        int width = (int)this.originalImage.getWidth();
+
+        for (int scanY = y - radius; scanY <= y + radius; scanY++) {
+            for (int scanX = x - radius; scanX <= x + radius; scanX++) {
+                if (scanX >= 0 && scanY >= 0 && scanX < width && scanY < height) {
+                    System.out.println(scanX + " " + scanY);
+                    nPixelsAround++;
+                }
+            }
+        }
+        nPixelsAround--;
+        System.out.println();
+
+        return nPixelsAround;
     }
 
     public double getGaussianBlurRadius() {
