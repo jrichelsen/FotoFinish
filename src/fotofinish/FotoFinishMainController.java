@@ -1,5 +1,7 @@
 package fotofinish;
 
+import java.awt.image.BufferedImage;
+import static java.awt.image.BufferedImage.TYPE_INT_RGB;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -13,6 +15,7 @@ import javafx.beans.Observable;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ObservableValue;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -114,6 +117,7 @@ public class FotoFinishMainController implements Initializable {
         this.testSliderCallsFunction();
         this.testPixelsChanged();
         this.testCorrectPixels();
+        this.testBlurOutput();
     }
 
     @FXML
@@ -395,4 +399,45 @@ public class FotoFinishMainController implements Initializable {
 
         assertEquals(testModel.applyGaussianBlur(1), 361);    // Testing corner
     }
+
+    public void testBlurOutput() {
+        System.out.println("overall blur");
+        
+        File fImage = new File("test/before4x4.png");
+        FotoFinishModel testModel = new FotoFinishModel();
+        testModel.loadImage(fImage);
+        testModel.applyGaussianBlur(1);
+
+        Image after;
+        try {
+            after = new Image(new FileInputStream(new File("test/after4x4.png")));
+        } catch (FileNotFoundException fnfex) {
+            System.out.println(false);
+            return;
+        }
+        
+        assertTrue(compareImages(SwingFXUtils.fromFXImage(testModel.getImage(), null), SwingFXUtils.fromFXImage(after, null)));
+    }
+
+    public static boolean compareImages(BufferedImage imgA, BufferedImage imgB) {
+  // The images must be the same size.
+  if (imgA.getWidth() == imgB.getWidth() && imgA.getHeight() == imgB.getHeight()) {
+    int width = imgA.getWidth();
+    int height = imgA.getHeight();
+
+    // Loop over every pixel.
+    for (int y = 0; y < height; y++) {
+      for (int x = 0; x < width; x++) {
+        // Compare the pixels for equality.
+        if (imgA.getRGB(x, y) != imgB.getRGB(x, y)) {
+          return false;
+        }
+      }
+    }
+  } else {
+    return false;
+  }
+
+  return true;
+}
 }
