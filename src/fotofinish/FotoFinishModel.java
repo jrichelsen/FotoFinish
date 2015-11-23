@@ -283,6 +283,14 @@ public class FotoFinishModel {
     public int applyGaussianBlur(double radius) {
         this.gaussianBlurRadius = radius;
         int pixels_changed = 0;
+        double height = this.originalImage.getHeight();
+        double width = this.originalImage.getWidth();
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                this.applyGaussianToPixel(x, y, (int)radius);
+                pixels_changed++;
+            }
+        }
         return pixels_changed;
     }
     
@@ -294,13 +302,11 @@ public class FotoFinishModel {
         for (int scanY = y - radius; scanY <= y + radius; scanY++) {
             for (int scanX = x - radius; scanX <= x + radius; scanX++) {
                 if (scanX >= 0 && scanY >= 0 && scanX < width && scanY < height) {
-                    System.out.println(scanX + " " + scanY);
                     nPixelsAround++;
                 }
             }
         }
         nPixelsAround--;
-        System.out.println();
 
         return nPixelsAround;
     }
