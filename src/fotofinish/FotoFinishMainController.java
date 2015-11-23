@@ -85,10 +85,6 @@ public class FotoFinishMainController implements Initializable {
                 this.refreshImageView();
             }
         });
-        this.gaussianBlurSlider.valueProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
-            model.applyGaussianBlur(newValue.doubleValue());
-            this.refreshImageView();
-        });
 
         this.imageView.preserveRatioProperty().set(true);
         this.zoom.addListener((Observable arg0) -> {

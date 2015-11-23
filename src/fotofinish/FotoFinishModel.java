@@ -39,6 +39,7 @@ public class FotoFinishModel {
     private double brightness;
     private double contrast;
     private double saturation;
+    private double gaussianBlurRadius;
     File galleryButterflyFile = new File("src/img/galleryButterfly.jpg");
     File galleryTeddyBearFile = new File("src/img/galleryTeddyBear.jpg");
     File galleryPrincessFile = new File("src/img/galleryPrincess.jpg");
@@ -57,6 +58,8 @@ public class FotoFinishModel {
         this.brightness = 0;
         this.contrast = 0;
         this.saturation = 0;
+        this.saturation = 0;
+        this.gaussianBlurRadius = 0;
         this.brushType = BrushType.CIRCLE;
         this.brushSize = 10;
         
@@ -275,6 +278,14 @@ public class FotoFinishModel {
         processor.setEffect(colorAdjust);
         this.image = processor.snapshot(null, null);
         logger.log(Level.INFO, "brighness, contast, and saturation levels updated image");
+    }
+
+    public void applyGaussianBlur(double radius) {
+        this.gaussianBlurRadius = radius;
+    }
+
+    public double getGaussianBlurRadius() {
+        return this.gaussianBlurRadius;
     }
 
     public void changeBrushColor(Color newBrushColor) {
