@@ -137,7 +137,7 @@ public class FotoFinishModel {
     }
 
     public void applyGrayscaleFilter() {
-        ImageView processor = new ImageView(this.originalImage);
+        ImageView processor = new ImageView(this.image);
 
         ColorAdjust grayscaleTone = new ColorAdjust();
         grayscaleTone.setSaturation(-1);
@@ -148,7 +148,7 @@ public class FotoFinishModel {
     }
 
     public void applySepiaFilter() {
-        ImageView processor = new ImageView(this.originalImage);
+        ImageView processor = new ImageView(this.image);
 
         processor.setEffect(new SepiaTone());
 
@@ -157,7 +157,7 @@ public class FotoFinishModel {
     }
 
     public void applyInstantFilter() {
-        ImageView processor = new ImageView(this.originalImage);
+        ImageView processor = new ImageView(this.image);
 
         ColorAdjust lowSaturation = new ColorAdjust();
         lowSaturation.setSaturation(-0.3);
