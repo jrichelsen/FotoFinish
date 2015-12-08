@@ -1,7 +1,6 @@
 package fotofinish;
 
 import java.awt.image.BufferedImage;
-import static java.awt.image.BufferedImage.TYPE_INT_RGB;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -219,7 +218,7 @@ public class FotoFinishModel {
     }
 
     public void applyCustomFilter() {
-        BufferedImage RGBBufferedImage = SwingFXUtils.fromFXImage(this.originalImage, null);
+        BufferedImage RGBBufferedImage = SwingFXUtils.fromFXImage(this.image, null);
         for (int y = 0; y < RGBBufferedImage.getHeight(); y++) {
             for (int x = 0; x < RGBBufferedImage.getWidth(); x++) {
                 int RGB = RGBBufferedImage.getRGB(x, y);
