@@ -1,7 +1,6 @@
 package fotofinish;
 
 import java.awt.image.BufferedImage;
-import static java.awt.image.BufferedImage.TYPE_INT_RGB;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -89,8 +88,9 @@ public class FotoFinishMainController implements Initializable {
             }
         });
         this.gaussianBlurSlider.valueProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
-            model.applyGaussianBlur(newValue.doubleValue());
-            this.refreshImageView();
+            if (model.applyGaussianBlur(newValue.intValue())) {
+                this.refreshImageView();
+            }
         });
 
         this.imageView.preserveRatioProperty().set(true);
@@ -241,6 +241,7 @@ public class FotoFinishMainController implements Initializable {
         this.resetBrightnessSlider();
         this.resetContrastSlider();
         this.resetSaturationSlider();
+        this.resetGaussianBlurSlider();
     }
 
     @FXML
@@ -259,6 +260,12 @@ public class FotoFinishMainController implements Initializable {
     private void resetSaturationSlider() {
         this.saturationSlider.setValue(0);
         logger.log(Level.INFO, "saturation slider reset");
+    }
+
+    @FXML
+    private void resetGaussianBlurSlider() {
+        this.gaussianBlurSlider.setValue(0);
+        logger.log(Level.INFO, "gaussian blur slider reset");
     }
 
     @FXML
@@ -316,7 +323,7 @@ public class FotoFinishMainController implements Initializable {
     }
 
     public void testChangeBrightnessMax() {
-        System.out.println("changeBrightness to max");
+        System.out.println("changeBrightnessMax test");
         double newBrightness = 1;
         FotoFinishModel testModel = new FotoFinishModel();
 
@@ -372,12 +379,14 @@ public class FotoFinishMainController implements Initializable {
 
     public void testSliderCallsFunction() {
         System.out.println("slider calls function test");
-        double radius = 3;
-        this.gaussianBlurSlider.setValue(radius);
-        assertEquals(model.getGaussianBlurRadius(), radius, 0);
-        this.gaussianBlurSlider.setValue(0);
+        int originalRadius = model.getGaussianBlurRadius();
+        int testRadius = 3;
+        this.gaussianBlurSlider.setValue(testRadius);
+        assertEquals(model.getGaussianBlurRadius(), testRadius, 0);
+        this.gaussianBlurSlider.setValue(originalRadius);
     }
-    
+
+    /*
     public void testPixelsChanged(){
         System.out.println("number of pixels changed function test");
         
@@ -399,64 +408,65 @@ public class FotoFinishMainController implements Initializable {
 
         assertEquals(testModel.applyGaussianBlur(1), 361);    // Testing corner
     }
+    */
 
     public void testBlurOutput() {
-        System.out.println("overall blur");
+        System.out.println("test output of gaussian blur");
         
-        File fImage = new File("test/before4x4.png");
+        File beforeImg = new File("test/before4x4.png");
         FotoFinishModel testModel = new FotoFinishModel();
-        testModel.loadImage(fImage);
-        printImage(SwingFXUtils.fromFXImage(testModel.getImage(), null));
-        System.out.println("");
+        testModel.loadImage(beforeImg);
+        //System.out.println("image before blur:");
+        //printImage(SwingFXUtils.fromFXImage(testModel.getImage(), null));
+        //System.out.println("");
         testModel.applyGaussianBlur(1);
 
-        Image after;
+        Image expectImg;
         try {
-            after = new Image(new FileInputStream(new File("test/after4x4.png")));
+            expectImg = new Image(new FileInputStream(new File("test/after4x4.png")));
         } catch (FileNotFoundException fnfex) {
-            System.out.println(false);
+            System.out.println("error opening after image");
             return;
         }
-        printImage(SwingFXUtils.fromFXImage(testModel.getImage(), null));
-        System.out.println("");
-        printImage(SwingFXUtils.fromFXImage(after, null));
+        //System.out.println("image after blur:");
+        //printImage(SwingFXUtils.fromFXImage(testModel.getImage(), null));
+        //System.out.println("");
+
+        //System.out.println("expected result:");
+        //printImage(SwingFXUtils.fromFXImage(expectImg, null));
+        //System.out.println("");
         
-        assertTrue(compareImages(SwingFXUtils.fromFXImage(testModel.getImage(), null), SwingFXUtils.fromFXImage(after, null)));
+        assertTrue(compareImages(SwingFXUtils.fromFXImage(testModel.getImage(), null), SwingFXUtils.fromFXImage(expectImg, null)));
+    }
+
+    public static void printImage(BufferedImage img) {
+        int width = img.getWidth();
+        int height = img.getHeight();
+
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                java.awt.Color color = new java.awt.Color(img.getRGB(x, y));
+                System.out.print(color.getGreen() + " ");
+            }
+            System.out.println("");
+        }
     }
 
     public static boolean compareImages(BufferedImage imgA, BufferedImage imgB) {
-  // The images must be the same size.
-  if (imgA.getWidth() == imgB.getWidth() && imgA.getHeight() == imgB.getHeight()) {
-    int width = imgA.getWidth();
-    int height = imgA.getHeight();
+        if (imgA.getWidth() == imgB.getWidth() && imgA.getHeight() == imgB.getHeight()) {
+            int width = imgA.getWidth();
+            int height = imgA.getHeight();
 
-    // Loop over every pixel.
-    for (int y = 0; y < height; y++) {
-      for (int x = 0; x < width; x++) {
-        // Compare the pixels for equality.
-        if (imgA.getRGB(x, y) != imgB.getRGB(x, y)) {
-          return false;
+            for (int y = 0; y < height; y++) {
+                for (int x = 0; x < width; x++) {
+                    if (imgA.getRGB(x, y) != imgB.getRGB(x, y)) {
+                        return false;
+                    }
+                }
+            }
+        } else {
+            return false;
         }
-      }
+        return true;
     }
-  } else {
-    return false;
-  }
-
-  return true;
-}
-    public static void printImage(BufferedImage imgA) {
-  // The images must be the same size.
-    int width = imgA.getWidth();
-    int height = imgA.getHeight();
-
-    // Loop over every pixel.
-    for (int y = 0; y < height; y++) {
-      for (int x = 0; x < width; x++) {
-        java.awt.Color selectColor = new java.awt.Color(imgA.getRGB(x, y));
-        System.out.print(selectColor.getGreen() + " ");
-      }
-        System.out.println("");
-    }
-   }
 }

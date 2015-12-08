@@ -137,7 +137,7 @@
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <Slider fx:id="gaussianBlurSlider" blockIncrement="2.0" layoutX="20.0" layoutY="121.0" majorTickUnit="1.0" max="10.0" minorTickCount="0" onContextMenuRequested="#resetSaturationSlider" showTickMarks="true" GridPane.rowIndex="7" />
+                        <Slider fx:id="gaussianBlurSlider" blockIncrement="2.0" layoutX="20.0" layoutY="121.0" majorTickUnit="1.0" max="10.0" minorTickCount="0" onContextMenuRequested="#resetGaussianBlurSlider" showTickMarks="true" GridPane.rowIndex="7" />
                      </children>
                      <padding>
                         <Insets left="10.0" right="10.0" />

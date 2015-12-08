@@ -40,7 +40,7 @@ public class FotoFinishModel {
     private double brightness;
     private double contrast;
     private double saturation;
-    private double gaussianBlurRadius;
+    private int gaussianBlurRadius;
     File galleryButterflyFile = new File("src/img/galleryButterfly.jpg");
     File galleryTeddyBearFile = new File("src/img/galleryTeddyBear.jpg");
     File galleryPrincessFile = new File("src/img/galleryPrincess.jpg");
@@ -281,54 +281,47 @@ public class FotoFinishModel {
         logger.log(Level.INFO, "brighness, contast, and saturation levels updated image");
     }
 
-    public int applyGaussianBlur(double radius) {
-        this.gaussianBlurRadius = radius;
-        int pixels_changed = 0;
-        double height = this.originalImage.getHeight();
-        double width = this.originalImage.getWidth();
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                this.applyGaussianToPixel(x, y, (int)radius);
-                pixels_changed++;
-            }
-        }
-        return pixels_changed;
-    }
-    
-    public int applyGaussianToPixel (int x, int y, int radius) {
-        int nPixelsAround = 0;
-        int height = (int)this.originalImage.getHeight();
-        int width = (int)this.originalImage.getWidth();
-        int accumR = 0;
-        int accumG = 0;
-        int accumB = 0;
-        BufferedImage before = SwingFXUtils.fromFXImage(this.originalImage, null);
-
-        for (int scanY = y - radius; scanY <= y + radius; scanY++) {
-            for (int scanX = x - radius; scanX <= x + radius; scanX++) {
-                if (scanX >= 0 && scanY >= 0 && scanX < width && scanY < height && !(scanX == x && scanY == y)) {
-                    int rgb = before.getRGB(scanX, scanY);
-                    java.awt.Color color = new java.awt.Color(rgb);
-                    accumR += color.getRed();
-                    accumG += color.getGreen();
-                    accumB += color.getBlue();
-                    nPixelsAround++;
+    public boolean applyGaussianBlur(int newRadius) {
+        if (Math.abs(this.gaussianBlurRadius - newRadius) >= 1) {
+            this.gaussianBlurRadius = newRadius;
+            int height = (int)this.originalImage.getHeight();
+            int width = (int)this.originalImage.getWidth();
+            BufferedImage beforeImg = SwingFXUtils.fromFXImage(this.originalImage, null);
+            BufferedImage afterImg = SwingFXUtils.fromFXImage(this.originalImage, null);
+            for (int y = 0; y < height; y++) {
+                for (int x = 0; x < width; x++) {
+                    int nPixelsAround = 0;
+                    int accumR = 0;
+                    int accumG = 0;
+                    int accumB = 0;
+                    for (int scanY = y - this.gaussianBlurRadius; scanY <= y + this.gaussianBlurRadius; scanY++) {
+                        for (int scanX = x - this.gaussianBlurRadius; scanX <= x + this.gaussianBlurRadius; scanX++) {
+                            if (scanX >= 0 && scanY >= 0 && scanX < width && scanY < height && !(scanX == x && scanY == y)) {
+                                int rgb = beforeImg.getRGB(scanX, scanY);
+                                java.awt.Color color = new java.awt.Color(rgb);
+                                accumR += color.getRed();
+                                accumG += color.getGreen();
+                                accumB += color.getBlue();
+                                nPixelsAround++;
+                            }
+                        }
+                    }
+                    accumR /= nPixelsAround;
+                    accumG /= nPixelsAround;
+                    accumB /= nPixelsAround;
+                    java.awt.Color newColor = new java.awt.Color(accumR, accumG, accumB);
+                    int newRgb = newColor.getRGB();
+                    afterImg.setRGB(x, y, newRgb);
                 }
             }
+            this.image = SwingFXUtils.toFXImage(afterImg, null);
+            logger.log(Level.INFO, "gaussian blur radius changed to {0}", this.gaussianBlurRadius);
+            return true;
         }
-        accumR /= nPixelsAround;
-        accumG /= nPixelsAround;
-        accumB /= nPixelsAround;
-        java.awt.Color newColor = new java.awt.Color(accumR, accumG, accumB);
-        int newRGB = newColor.getRGB();
-
-        BufferedImage after = SwingFXUtils.fromFXImage(this.image, null);
-        after.setRGB(x, y, newRGB);
-        this.image = SwingFXUtils.toFXImage(after, null);
-        return nPixelsAround;
+        return false;
     }
 
-    public double getGaussianBlurRadius() {
+    public int getGaussianBlurRadius() {
         return this.gaussianBlurRadius;
     }
 
