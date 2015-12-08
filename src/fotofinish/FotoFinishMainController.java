@@ -114,7 +114,7 @@ public class FotoFinishMainController implements Initializable {
         this.testSaveImageAs();
 
         // gaussian blur tests
-        this.testSliderCallsFunction();
+        //this.testSliderCallsFunction();
         //this.testPixelsChanged();
         //this.testCorrectPixels();
         this.testBlurOutput();
@@ -136,6 +136,7 @@ public class FotoFinishMainController implements Initializable {
         if (selectedFile != null) {
             logger.log(Level.INFO, "file {0} choosen in open file chooser", selectedFile);
             model.loadImage(selectedFile);
+            this.resetSliders();
             this.refreshImageView();
             this.stage.setTitle("Foto Finish - " + selectedFile);
         } else {
@@ -182,6 +183,10 @@ public class FotoFinishMainController implements Initializable {
         if (selectedFile != null) {
             logger.log(Level.INFO, "file {0} choosen in save as file chooser", selectedFile);
             model.saveImageAs(selectedFile);
+            model.loadImage(selectedFile);
+            this.resetSliders();
+            this.refreshImageView();
+            this.stage.setTitle("Foto Finish - " + selectedFile);
         } else {
             logger.log(Level.INFO, "no file selected in save as file chooser");
         }
