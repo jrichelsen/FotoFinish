@@ -82,11 +82,7 @@ public class FotoFinishMainController implements Initializable {
                 this.refreshImageView();
             }
         });
-        this.saturationSlider.valueProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
-            if (model.changeSaturation(newValue.doubleValue())) {
-                this.refreshImageView();
-            }
-        });
+        
         this.gaussianBlurSlider.valueProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
             if (model.applyGaussianBlur(newValue.intValue())) {
                 this.refreshImageView();
