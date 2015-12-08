@@ -281,6 +281,10 @@ public class FotoFinishModel {
     }
 
     public boolean applyGaussianBlur(int newRadius) {
+        if(newRadius == 0) {
+            this.image = this.originalImage;
+            return true;
+        }
         if (Math.abs(this.gaussianBlurRadius - newRadius) >= 1) {
             this.gaussianBlurRadius = newRadius;
             int height = (int)this.originalImage.getHeight();
