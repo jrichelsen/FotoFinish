@@ -257,7 +257,7 @@ public class FotoFinishModel {
     }
 
     public boolean changeSaturation(double newSaturation) {
-        if (Math.abs(this.contrast - newSaturation) >= this.SLIDER_CHANGE_THRESH) {
+        if (Math.abs(this.saturation - newSaturation) >= this.SLIDER_CHANGE_THRESH) {
             this.saturation = newSaturation;
             this.updateBrightnessContrastSaturationGaussian();
             logger.log(Level.INFO, "saturation changed to {0}", this.saturation);
