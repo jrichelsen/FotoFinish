@@ -29,7 +29,8 @@ public class FotoFinishModel {
     }
 
     private static final Logger logger = Logger.getLogger(fotofinish.FotoFinishModel.class.getName());
-
+    public int[] q = new int[200] ;
+    public int top = -1;    
     private File imageFile;
     private Image image;
     private Image originalImage;
@@ -137,7 +138,6 @@ public class FotoFinishModel {
 
     public void applyGrayscaleFilter() {
         ImageView processor = new ImageView(this.image);
-
         ColorAdjust grayscaleTone = new ColorAdjust();
         grayscaleTone.setSaturation(-1);
         processor.setEffect(grayscaleTone);
@@ -148,7 +148,6 @@ public class FotoFinishModel {
 
     public void applySepiaFilter() {
         ImageView processor = new ImageView(this.image);
-
         processor.setEffect(new SepiaTone());
 
         this.image = processor.snapshot(null, null); //TODO: what is first parameter?
@@ -157,7 +156,6 @@ public class FotoFinishModel {
 
     public void applyInstantFilter() {
         ImageView processor = new ImageView(this.image);
-
         ColorAdjust lowSaturation = new ColorAdjust();
         lowSaturation.setSaturation(-0.3);
         processor.setEffect(lowSaturation);
@@ -241,7 +239,7 @@ public class FotoFinishModel {
     public boolean changeBrightness(double newBrightness) {
         if (Math.abs(this.brightness - newBrightness) >= this.SLIDER_CHANGE_THRESH) {
             this.brightness = newBrightness;
-            this.updateBrightnessContrastSaturation();
+            this.updateBrightnessContrastSaturationGaussian();
             logger.log(Level.INFO, "brightness changed to {0}", this.brightness);
             return true;
         }
@@ -251,7 +249,7 @@ public class FotoFinishModel {
     public boolean changeContrast(double newContrast) {
         if (Math.abs(this.contrast - newContrast) >= this.SLIDER_CHANGE_THRESH) {
             this.contrast = newContrast;
-            this.updateBrightnessContrastSaturation();
+            this.updateBrightnessContrastSaturationGaussian();
             logger.log(Level.INFO, "contrast changed to {0}", this.contrast);
             return true;
         }
@@ -261,27 +259,33 @@ public class FotoFinishModel {
     public boolean changeSaturation(double newSaturation) {
         if (Math.abs(this.contrast - newSaturation) >= this.SLIDER_CHANGE_THRESH) {
             this.saturation = newSaturation;
-            this.updateBrightnessContrastSaturation();
+            this.updateBrightnessContrastSaturationGaussian();
             logger.log(Level.INFO, "saturation changed to {0}", this.saturation);
             return true;
         }
         return false;
     }
+    
 
-    private void updateBrightnessContrastSaturation() {
+    private void updateBrightnessContrastSaturationGaussian() {
         ImageView processor = new ImageView(this.originalImage);
         ColorAdjust colorAdjust = new ColorAdjust();
         colorAdjust.setBrightness(this.brightness);
         colorAdjust.setContrast(this.contrast);
         colorAdjust.setSaturation(this.saturation);
-
         processor.setEffect(colorAdjust);
+        applyGaussianBlur(this.gaussianBlurRadius);
         this.image = processor.snapshot(null, null);
+        for(int i=0;i<=top;i++){
+            if(q[top] == 1)this.applyGrayscaleFilter();
+            if(q[top] == 2)this.applySepiaFilter();
+            if(q[top] == 3)this.applyInstantFilter();
+        }
         logger.log(Level.INFO, "brighness, contast, and saturation levels updated image");
     }
 
     public boolean applyGaussianBlur(int newRadius) {
-        if(newRadius == 0) {
+          if(newRadius == 0) {
             this.image = this.originalImage;
             return true;
         }
@@ -313,15 +317,30 @@ public class FotoFinishModel {
                     accumG /= nPixelsAround;
                     accumB /= nPixelsAround;
                     java.awt.Color newColor = new java.awt.Color(accumR, accumG, accumB);
+                    
                     int newRgb = newColor.getRGB();
                     afterImg.setRGB(x, y, newRgb);
                 }
             }
             this.image = SwingFXUtils.toFXImage(afterImg, null);
+            ImageView processor = new ImageView(this.image);
+            ColorAdjust colorAdjust = new ColorAdjust();
+            colorAdjust.setBrightness(this.brightness);
+            colorAdjust.setContrast(this.contrast);
+            colorAdjust.setSaturation(this.saturation);
+            processor.setEffect(colorAdjust);
+            applyGaussianBlur(this.gaussianBlurRadius);
+            this.image = processor.snapshot(null, null);
+        
             logger.log(Level.INFO, "gaussian blur radius changed to {0}", this.gaussianBlurRadius);
             return true;
         }
-        return false;
+         for(int i=0;i<=top;i++){
+                if(q[top] == 1)this.applyGrayscaleFilter();
+                if(q[top] == 2)this.applySepiaFilter();
+                if(q[top] == 3)this.applyInstantFilter();
+        }
+         return false;
     }
 
     public int getGaussianBlurRadius() {
@@ -358,6 +377,7 @@ public class FotoFinishModel {
     } 
 
     public void resetImageToOriginal() {
+        top = -1;
         this.image = this.originalImage;
     }
 }

@@ -47,7 +47,7 @@ public class FotoFinishMainController implements Initializable {
     @FXML
     private Slider saturationSlider;
     @FXML
-    private Slider gaussianBlurSlider;
+    public Slider gaussianBlurSlider;
     @FXML
     private NumberFieldFX brushSizeNumberField;
     @FXML
@@ -207,18 +207,24 @@ public class FotoFinishMainController implements Initializable {
     @FXML
     private void filterGrayscale(ActionEvent ignored) {
         model.applyGrayscaleFilter();
+        model.top++;
+        model.q[model.top] = 1;
         this.refreshImageView();
     }
 
     @FXML
     private void filterSepia(ActionEvent ignored) {
         model.applySepiaFilter();
+        model.top++;
+        model.q[model.top] = 2;
         this.refreshImageView();
     }
 
     @FXML
     private void filterInstant(ActionEvent ignored) {
         model.applyInstantFilter();
+        model.top++;
+        model.q[model.top] = 3;
         this.refreshImageView();
     }
 
@@ -261,7 +267,7 @@ public class FotoFinishMainController implements Initializable {
     }
 
     @FXML
-    private void resetGaussianBlurSlider() {
+    public void resetGaussianBlurSlider() {
         this.gaussianBlurSlider.setValue(0);
         logger.log(Level.INFO, "gaussian blur slider reset");
     }
